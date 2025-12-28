@@ -1,5 +1,5 @@
 ---
-layout: home
+layout: default
 ---
 
 Here you can say lots of fun things about your site.
