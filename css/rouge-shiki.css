@@ -1,20 +1,21 @@
-/* Rouge Shiki-inspired Theme */
-/* Works with GitHub Pages (Rouge + Kramdown) */
+/* Rouge Shiki Light Theme */
+/* Inspired by Shiki GitHub Light */
 
 .highlight {
-  background: #0d1117;
-  color: #c9d1d9;
+  background: #ffffff;
+  color: #24292f;
   border-radius: 6px;
   padding: 1em;
   overflow-x: auto;
   font-size: 0.95rem;
   line-height: 1.6;
+  border: 1px solid #d0d7de;
 }
 
-/* Base */
+/* Reset Minima interference */
 .highlight pre,
 .highlight code {
-  background: none;
+  background: transparent !important;
   color: inherit;
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
@@ -24,7 +25,7 @@
 .highlight .c1,
 .highlight .cm,
 .highlight .cp {
-  color: #8b949e;
+  color: #6e7781;
   font-style: italic;
 }
 
@@ -35,7 +36,7 @@
 .highlight .kp,
 .highlight .kr,
 .highlight .kt {
-  color: #ff7b72;
+  color: #cf222e;
 }
 
 /* Strings */
@@ -49,7 +50,7 @@
 .highlight .sh,
 .highlight .si,
 .highlight .sx {
-  color: #a5d6ff;
+  color: #0a3069;
 }
 
 /* Numbers */
@@ -59,13 +60,13 @@
 .highlight .mh,
 .highlight .mi,
 .highlight .mo {
-  color: #79c0ff;
+  color: #0550ae;
 }
 
-/* Functions / Methods */
+/* Functions */
 .highlight .nf,
 .highlight .fm {
-  color: #d2a8ff;
+  color: #8250df;
 }
 
 /* Variables */
@@ -73,44 +74,44 @@
 .highlight .vc,
 .highlight .vg,
 .highlight .vi {
-  color: #ffa657;
+  color: #953800;
 }
 
 /* Types / Classes */
 .highlight .nc,
 .highlight .nn {
-  color: #f2cc60;
+  color: #116329;
 }
 
 /* Operators */
 .highlight .o,
 .highlight .ow {
-  color: #ff7b72;
+  color: #cf222e;
 }
 
 /* Builtins */
 .highlight .bp {
-  color: #79c0ff;
+  color: #0550ae;
 }
 
 /* Attributes */
 .highlight .na {
-  color: #7ee787;
+  color: #1a7f37;
 }
 
-/* Deleted / Inserted (diff) */
+/* Diff */
 .highlight .gd {
-  color: #ffa198;
-  background: #490202;
+  color: #82071e;
+  background: #ffebe9;
 }
 .highlight .gi {
-  color: #56d364;
-  background: #0f5323;
+  color: #116329;
+  background: #dafbe1;
 }
 
-/* Line numbers (if enabled) */
+/* Line numbers (optional) */
 .highlight .lineno {
-  color: #6e7681;
+  color: #8c959f;
   padding-right: 1em;
   user-select: none;
 }
