@@ -7,8 +7,6 @@ collections:
     output: true
     permalink: /blog/:name/
 
-theme: "minima"
-
 rss: rss
 
 kramdown:
@@ -18,4 +16,3 @@ kramdown:
 plugins:
   - jekyll-feed
   - jekyll-sitemap
-
