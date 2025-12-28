@@ -1,0 +1,116 @@
+/* Rouge Shiki-inspired Theme */
+/* Works with GitHub Pages (Rouge + Kramdown) */
+
+.highlight {
+  background: #0d1117;
+  color: #c9d1d9;
+  border-radius: 6px;
+  padding: 1em;
+  overflow-x: auto;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Base */
+.highlight pre,
+.highlight code {
+  background: none;
+  color: inherit;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+/* Comments */
+.highlight .c,
+.highlight .c1,
+.highlight .cm,
+.highlight .cp {
+  color: #8b949e;
+  font-style: italic;
+}
+
+/* Keywords */
+.highlight .k,
+.highlight .kd,
+.highlight .kn,
+.highlight .kp,
+.highlight .kr,
+.highlight .kt {
+  color: #ff7b72;
+}
+
+/* Strings */
+.highlight .s,
+.highlight .s1,
+.highlight .s2,
+.highlight .sb,
+.highlight .sc,
+.highlight .sd,
+.highlight .se,
+.highlight .sh,
+.highlight .si,
+.highlight .sx {
+  color: #a5d6ff;
+}
+
+/* Numbers */
+.highlight .m,
+.highlight .mb,
+.highlight .mf,
+.highlight .mh,
+.highlight .mi,
+.highlight .mo {
+  color: #79c0ff;
+}
+
+/* Functions / Methods */
+.highlight .nf,
+.highlight .fm {
+  color: #d2a8ff;
+}
+
+/* Variables */
+.highlight .nv,
+.highlight .vc,
+.highlight .vg,
+.highlight .vi {
+  color: #ffa657;
+}
+
+/* Types / Classes */
+.highlight .nc,
+.highlight .nn {
+  color: #f2cc60;
+}
+
+/* Operators */
+.highlight .o,
+.highlight .ow {
+  color: #ff7b72;
+}
+
+/* Builtins */
+.highlight .bp {
+  color: #79c0ff;
+}
+
+/* Attributes */
+.highlight .na {
+  color: #7ee787;
+}
+
+/* Deleted / Inserted (diff) */
+.highlight .gd {
+  color: #ffa198;
+  background: #490202;
+}
+.highlight .gi {
+  color: #56d364;
+  background: #0f5323;
+}
+
+/* Line numbers (if enabled) */
+.highlight .lineno {
+  color: #6e7681;
+  padding-right: 1em;
+  user-select: none;
+}
