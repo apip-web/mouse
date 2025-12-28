@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Postingan baru
-date: {{ "now" | date: "%Y-%m-%d %H:%M:%S %z" }}
+date: 2025-01-10 21:30:00 +0700
 author: Onta
 ---
 
