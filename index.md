@@ -10,12 +10,11 @@ Or maybe what you plan to blog about.
 
 some lined
 
+### Pages
 <ul>
-  {% assign posts = site.blog | sort: "date" | reverse %}
-  {% for post in posts %}
+  {% for p in site.blog %}
     <li>
-      <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-      <small>{{ post.date | date: "%d %b %Y" }}</small>
+      <a href="{{ p.url | relative_url }}">{{ p.title }}</a>
     </li>
   {% endfor %}
 </ul>
