@@ -19,9 +19,3 @@ plugins:
   - jekyll-feed
   - jekyll-sitemap
 
-defaults:
-  - scope:
-      path: ""
-      type: post
-    values:
-      tags: Other
