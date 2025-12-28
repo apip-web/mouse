@@ -5,6 +5,7 @@ description: "0Some short description of your blog can go here." # This will sho
 collections:
   blog:
     output: true
+    permalink: /blog/:name/
 
 theme: "minima"
 
