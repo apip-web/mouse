@@ -18,3 +18,7 @@ some lined
     </li>
   {% endfor %}
 </ul>
+
+<hr>
+
+<a href="/">Back to home</a>
