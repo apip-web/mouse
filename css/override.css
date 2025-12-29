@@ -70,9 +70,10 @@ code {
 .site-footer {
   text-align: center;
   padding: 1.5em 0;
-  background: #f0f0f0;
+  background: transparent;
   font-size: 0.9rem;
   color: #555;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 .site-footer a {
   color: #3366cc;
