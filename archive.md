@@ -5,17 +5,6 @@ title: Blog Archive
 
 <h1>Blog Archive</h1>
 
-{% assign posts = site.blog | sort: "date" | reverse %}  
-<ul>  
-{% for post in posts %}  
-  <li>  
-    <a href="{{ post.url | relative_url }}">  
-      {{ post.date | date: "%B %Y" }} - {{ post.title }}  
-    </a>  
-  </li>  
-{% endfor %}  
-</ul>
-
 ---
 
 ---
