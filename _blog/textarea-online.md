@@ -4,7 +4,6 @@ title: Textarea Online
 ---
   <style>
     body {
-      font-family: monospace, Arial, sans-serif;
       background: #f4f4f9;
     }
     .textarea-container {
