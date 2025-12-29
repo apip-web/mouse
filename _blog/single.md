@@ -6,6 +6,10 @@ date: 2025-12-29
 
 <div id='page_holder'></div>
 
+{% for post in site.posts %}
+<a href="#{{ post.id }}">{{ post.title }}</a>
+{% endfor %}
+
 <script>
 $(document).ready(function() {
   const $holder = $('#page_holder');
