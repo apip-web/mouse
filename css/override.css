@@ -1,8 +1,6 @@
-$accent: #FF0F00;
-
-$max-width: 740px;
-$med-width: 600px;
-$small-width: 480px;
+:root {
+  --accent: #FF0F00;
+}
 
 body {
     margin: 0;
@@ -10,7 +8,7 @@ body {
 }
 a:link,
 a:visited {
-  color: $accent;
+  color: var(--accent);
   text-decoration: none;
 }
 
