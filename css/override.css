@@ -70,3 +70,18 @@ code {
   font-size: 2.5em;
   opacity: 0.3;
 }
+
+.site-footer {
+  text-align: center;
+  padding: 1.5em 0;
+  background: #f0f0f0;
+  font-size: 0.9rem;
+  color: #555;
+}
+.site-footer a {
+  color: #3366cc;
+  text-decoration: none;
+}
+.site-footer a:hover {
+  text-decoration: underline;
+}
