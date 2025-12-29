@@ -30,6 +30,7 @@ code {
 /* Post navigation links */
 .post_navi {
   display: flex;
+  margin: 20px 0;
 }
 
 .post_navi-label {
