@@ -4,38 +4,60 @@ title: Single Page
 date: 2025-12-29
 ---
 
-<div id='page_holder'></div>
+<div id="page_holder">
+  <!-- Konten homepage bisa ditulis di sini secara statis -->
+  <h1>Selamat Datang</h1>
+  <p>Ini adalah halaman utama.</p>
+</div>
 
-{% for post in site.posts %}
-<a href="#{{ post.id }}">{{ post.title }}</a>
-{% endfor %}
+<!-- Daftar link navigasi -->
+<nav>
+  <a href="#index">Home</a>
+  <a href="#about">About</a>
+
+  {% for post in site.posts limit:10 %}
+    <a href="#{{ post.url | remove: '/' | remove: '.html' }}">{{ post.title }}</a>
+  {% endfor %}
+</nav>
 
 <script>
 $(document).ready(function() {
-  const $holder = $('#page_holder');
+  // Handle semua klik pada link yang dimulai dengan #
+  $(document).on('click', 'a[href^="#"]', function(e) {
+    e.preventDefault();
 
-  // Tampilkan loading sementara (opsional, untuk UX lebih baik)
-  $holder.html('<p>Loading content...</p>');
+    let hash = $(this).attr('href').substring(1);  // ambil nilai setelah #
 
-  $.getJSON('/html.json')
-    .done(function(data) {
-      $holder.pagify({
-        pages: data,
-        defaultPage: 'home'  // atau nama halaman default Anda
-      });
-    })
-    .fail(function(jqXHR, textStatus, errorThrown) {
-      // Tampilkan pesan error langsung di dalam #page_holder
-      let errorMessage = '<div style="padding: 2em; text-align: center; color: #d9534f; background: #f2dede; border: 1px solid #ebccd1; border-radius: 8px;">';
-      errorMessage += '<h3>Gagal memuat konten</h3>';
-      errorMessage += '<p><strong>Error:</strong> ' + textStatus + '</p>';
-      if (errorThrown) {
-        errorMessage += '<p><strong>Detail:</strong> ' + errorThrown + '</p>';
+    // Jika hash kosong atau hanya '#', abaikan
+    if (!hash) return;
+
+    let pageUrl = hash + '.html';
+
+    // Tampilkan loading sementara (opsional)
+    $('#page_holder').html('<p style="text-align:center; padding:2em;">Loading...</p>');
+
+    // Muat konten
+    $('#page_holder').load(pageUrl + ' > *', function(response, status, xhr) {
+      if (status === "error") {
+        $('#page_holder').html(
+          '<div style="padding:2em; text-align:center; color:#d9534f;">' +
+          '<h3>Halaman tidak ditemukan</h3>' +
+          '<p>File <strong>' + pageUrl + '</strong> tidak ada atau error ' + xhr.status + '</p>' +
+          '</div>'
+        );
+      } else {
+        // Update URL tanpa reload (opsional, untuk back/forward button)
+        history.pushState(null, '', '#' + hash);
       }
-      errorMessage += '<p>Periksa koneksi internet atau coba refresh halaman.</p>';
-      errorMessage += '</div>';
-
-      $holder.html(errorMessage);
     });
+  });
+
+  // Handle tombol back/forward browser
+  $(window).on('popstate', function() {
+    let hash = window.location.hash.substring(1);
+    if (hash) {
+      $('#page_holder').load(hash + '.html > *');
+    }
+  });
 });
 </script>
