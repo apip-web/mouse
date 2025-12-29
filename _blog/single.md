@@ -12,11 +12,10 @@ date: 2025-12-29
 
 <!-- Daftar link navigasi -->
 <nav>
-  <a href="#index">Home</a>
-  <a href="#about">About</a>
+  <a href="#home">Home</a>
 
-  {% for post in site.posts limit:10 %}
-    <a href="#{{ post.url | remove: '/' | remove: '.html' }}">{{ post.title }}</a>
+  {% for post in site.blog limit:10 %}
+    <a href="#{{ post.url | replace: '/', '' | remove: '.html' }}">{{ post.title }}</a>
   {% endfor %}
 </nav>
 
