@@ -12,7 +12,7 @@ title: Textarea Online
       max-width: 700px;
     }
     textarea {
-      width: 100%;
+      width: auto;
       height: 300px;
       padding: 15px;
       font-size: 12px;
