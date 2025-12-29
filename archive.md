@@ -3,14 +3,14 @@ layout: post
 title: Blog Archive
 ---
 
-<ul id="archive-list">
+<div id="archive-list">
   {% assign blog_posts = site.blog | sort: "date" | reverse %}
   {% for post in blog_posts %}
-    <li data-date="{{ post.date | date: "%Y-%m-%d" }}">
+    <ul><li data-date="{{ post.date | date: "%Y-%m-%d" }}">
       <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-    </li>
+    </li></ul>
   {% endfor %}
-</ul>
+</div>
 
 <script>
 const list = document.getElementById('archive-list');
