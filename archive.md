@@ -1,7 +1,8 @@
 ---
 layout: default
-title: Blog Archive
 ---
+
+<h1>Blog Archive</h1>
 
 <div id="archive-list">
   {% assign blog_posts = site.blog | sort: "date" | reverse %}
