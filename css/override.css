@@ -5,6 +5,7 @@
 body {
     margin: 0 20px;
     background-color: #FFFFDD;
+    min-height: 100%;
 }
 a:link,
 a:visited {
