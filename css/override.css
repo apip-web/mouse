@@ -1,12 +1,4 @@
-html {
-  background: red !important;
-}
-
 body {
-  background: blue !important;
-}
-
-body, .container-lg {
   background-color: #FFFFDD;
 }
 
