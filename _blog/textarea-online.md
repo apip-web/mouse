@@ -4,11 +4,8 @@ title: Textarea Online
 ---
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: monospace, Arial, sans-serif;
       background: #f4f4f9;
-      padding: 0px;
-      display: flex;
-      justify-content: center;
     }
     .textarea-container {
       width: 100%;
