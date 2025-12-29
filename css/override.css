@@ -1,4 +1,4 @@
-$accent: red;
+$accent: #FF0F00;
 
 $max-width: 740px;
 $med-width: 600px;
@@ -9,14 +9,16 @@ $small-width: 480px;
 body {
     margin: 0;
     background-color: #FFFFDD;
-    min-height: 100%;
 }
-a {
-    text-decoration: none;
-    color: $accent;
+a:link,
+a:visited {
+  color: $accent;
+  text-decoration: none;
 }
-a:hover {
-    text-decoration: underline;
+
+a:hover,
+a:active {
+  text-decoration: underline;
 }
 hr {
     margin: 5px;
