@@ -2,9 +2,6 @@ title: "Little Note"
 author: "Apip"
 description: "© 2025"
 
-url: "https://apip-web.github.io"
-baseurl: "/mouse"
-
 collections:
   blog:
     output: true
