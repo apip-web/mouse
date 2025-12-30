@@ -12,36 +12,44 @@
 const pageHolder = document.getElementById('page_holder');
 const base = "{{ site.baseurl }}"; // "/mouse"
 
+// Fungsi fade-in sederhana
+function fadeIn(el) {
+  let op = 0;
+  const fade = setInterval(() => {
+    op += 0.1;
+    el.style.opacity = op;
+    if(op >= 1) clearInterval(fade);
+  }, 30);
+}
+
 // Fungsi load halaman via fetch
-function loadPage(url) {
-  fetch(url)
+function loadPage(path, push = true) {
+  fetch(path)
     .then(res => {
-      if(!res.ok) throw new Error('Page not found: ' + url);
+      if(!res.ok) throw new Error('Page not found: ' + path);
       return res.text();
     })
     .then(html => {
       html = html.replace(/<footer[\s\S]*?<\/footer>/gi,'');
 
-      // Konten lama keluar
-      const oldContent = pageHolder.querySelector('.page-content');
-      if(oldContent) {
-        oldContent.classList.add('out');
-        setTimeout(() => oldContent.remove(), 400);
-      }
-
-      // Konten baru
       const wrapper = document.createElement('div');
       wrapper.className = 'page-content';
       wrapper.innerHTML = html;
+
+      pageHolder.innerHTML = '';
       pageHolder.appendChild(wrapper);
 
-      // Force reflow supaya transition jalan
       wrapper.getBoundingClientRect();
-
       wrapper.classList.add('active');
 
       window.scrollTo(0,0);
       attachLinkListeners();
+
+      // update URL tanpa reload
+      if(push) {
+        let url = path.replace(base,'').replace(/\/index\.html$/,'');
+        history.pushState({ path: url }, '', base + url);
+      }
 
     })
     .catch(err => {
@@ -52,55 +60,49 @@ function loadPage(url) {
     });
 }
 
-// Pasang listener link internal
+// Tangkap semua link internal
 function attachLinkListeners() {
-  document.querySelectorAll('a[href^="{{ site.baseurl }}/"]').forEach(a => {
-    if(a.href.includes(window.location.origin)) {
+  document.querySelectorAll('a[href^="/"]').forEach(a => {
+    if (!a.dataset.spaced && a.href.includes(window.location.origin)) {
+      a.dataset.spaced = "true";
       a.addEventListener('click', e => {
         e.preventDefault();
-        let href = a.getAttribute('href');
+        let url = a.getAttribute('href');
 
-        // Tambahkan index.html jika berakhiran /
-        if(href.endsWith('/')) href += 'index.html';
-
-        // Hitung hash bersih
-        let relativePath = href.replace(base,'').replace(/^\/|\/index\.html$/g,'') || 'home';
-        window.location.hash = relativePath;
-
-        // Build fetch path
-        let fetchPath = base + '/' + (relativePath === 'home' ? '' : relativePath + '/index.html');
-        if(relativePath === 'home') {
-          // homepage → pakai content langsung
-          pageHolder.innerHTML = `{{ content | strip_newlines | jsonify | raw }}`;
-          attachLinkListeners();
-          window.scrollTo(0,0);
+        // homepage special case
+        if(url === base || url === base + '/') {
+          loadPage(base + '/', true);
         } else {
-          loadPage(fetchPath);
+          if(url.endsWith('/')) url += 'index.html';
+          loadPage(url, true);
         }
       });
     }
   });
 }
 
-// Load halaman awal sesuai hash
-function initPage() {
-  let hash = window.location.hash.slice(1);
-
-  if(!hash || hash === 'home') {
-    // homepage → pakai content default
-    pageHolder.innerHTML = `{{ content | strip_newlines | jsonify | raw }}`;
-    attachLinkListeners();
-    window.scrollTo(0,0);
-    return;
+// Tangani back/forward browser
+window.addEventListener('popstate', e => {
+  if(e.state && e.state.path) {
+    let path = base + e.state.path;
+    // homepage special case
+    if(path === base + '/') path = base + '/';
+    loadPage(path, false);
+  } else {
+    loadPage(base + '/', false);
   }
+});
 
-  // halaman lain → fetch
-  let fetchPath = base + '/' + hash + '/index.html';
-  loadPage(fetchPath);
-}
-
-window.addEventListener('hashchange', initPage);
-window.addEventListener('DOMContentLoaded', initPage);
+// Load halaman awal
+window.addEventListener('DOMContentLoaded', () => {
+  attachLinkListeners();
+  let path = location.pathname;
+  if(path === base || path === base + '/') {
+    loadPage(base + '/', false);
+  } else {
+    loadPage(path, false);
+  }
+});
 </script>
 
 <footer class="site-footer">
