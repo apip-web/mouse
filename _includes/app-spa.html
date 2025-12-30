@@ -55,7 +55,8 @@ function loadPage(url, push = true) {
 
         window.scrollTo(0,0);
         attachLinkListeners();
-
+        initTextareaApp(); // ← textarea
+         
         if (push) {
           history.pushState({ url }, '', url);
         }
