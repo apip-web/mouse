@@ -33,38 +33,48 @@ function render404(push = true) {
    LOAD PAGE
 ========================= */
 function loadPage(url, push = true) {
-  fetch(url)
-    .then(res => {
-      if (!res.ok) throw new Error('404');
-      return res.text();
-    })
-    .then(html => {
-      html = html.replace(/<footer[\s\S]*?<\/footer>/gi, '');
+  const oldPage = pageHolder.querySelector('.page-content');
 
-      const wrapper = document.createElement('div');
-      wrapper.className = 'page-content';
-      wrapper.innerHTML = html;
+  // fase 1: animasi keluar
+  if (oldPage) {
+    oldPage.classList.remove('active');
+    oldPage.classList.add('exit');
+  }
 
-      pageHolder.innerHTML = '';
-      pageHolder.appendChild(wrapper);
+  setTimeout(() => {
+    fetch(url)
+      .then(res => {
+        if (!res.ok) throw new Error('Page not found');
+        return res.text();
+      })
+      .then(html => {
+        html = html.replace(/<footer[\s\S]*?<\/footer>/gi,'');
 
-      wrapper.getBoundingClientRect();
-      wrapper.classList.add('active');
+        const wrapper = document.createElement('div');
+        wrapper.className = 'page-content';
+        wrapper.innerHTML = html;
 
-      window.scrollTo(0, 0);
-      attachLinkListeners();
+        pageHolder.innerHTML = '';
+        pageHolder.appendChild(wrapper);
 
-      if (push) {
-        history.pushState(
-          { path: url.replace(base,'') || '/' },
-          '',
-          url
-        );
-      }
-    })
-    .catch(() => {
-      render404(push);
-    });
+        // force reflow
+        wrapper.getBoundingClientRect();
+
+        // fase 2: animasi masuk
+        wrapper.classList.add('active');
+
+        window.scrollTo(0,0);
+        attachLinkListeners();
+
+        if (push) {
+          history.pushState({ url }, '', url);
+        }
+      })
+      .catch(() => {
+        show404(push);
+      });
+
+  }, 300); // HARUS sesuai durasi CSS exit
 }
 
 /* =========================
