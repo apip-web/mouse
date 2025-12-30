@@ -92,33 +92,6 @@ function attachLinkListeners() {
   });
 }
 
-// Tangkap semua link internal
-function attachLinkListeners() {
-  document.querySelectorAll('a[href^="/"]').forEach(a => {
-    if (!a.dataset.spaced && a.href.includes(window.location.origin)) {
-      a.dataset.spaced = "true"; // pastikan listener tidak double
-      a.addEventListener('click', e => {
-        e.preventDefault();
-        let url = a.getAttribute('href');
-
-        // Hilangkan base di awal
-        if(url.startsWith(base)) url = url.slice(base.length);
-
-        // Tambahkan index.html jika link berakhiran /
-        if(url.endsWith('/')) url += 'index.html';
-
-        // Hitung hash bersih
-        const hash = url.replace(/^\/|\/index\.html$/g,'') || 'home';
-        window.location.hash = hash;
-
-        // Bangun fetch path
-        const fetchPath = base + '/' + (hash === 'home' ? 'index.html' : hash + '/index.html');
-        loadPage(fetchPath);
-      });
-    }
-  });
-}
-
 // Load halaman awal sesuai hash
 function initPage() {
   let hash = window.location.hash.slice(1) || 'home';
