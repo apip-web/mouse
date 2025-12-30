@@ -13,16 +13,32 @@ const pageHolder = document.getElementById('page_holder');
 const base = "{{ site.baseurl }}"; // "/mouse"
 
 /* =========================
+   RENDER 404 (STATE RESMI)
+========================= */
+function render404(push = true) {
+  pageHolder.innerHTML = `
+    <div class="page-content active" style="padding:2em;background:#fee;color:#900">
+      <h1>404</h1>
+      <p>Halaman tidak ditemukan.</p>
+      <a href="${base}/">Kembali ke Home</a>
+    </div>
+  `;
+
+  if (push) {
+    history.pushState({ path: '/404' }, '', base + '/404');
+  }
+}
+
+/* =========================
    LOAD PAGE
 ========================= */
 function loadPage(url, push = true) {
   fetch(url)
     .then(res => {
-      if (!res.ok) throw new Error('Page not found: ' + url);
+      if (!res.ok) throw new Error('404');
       return res.text();
     })
     .then(html => {
-      // buang footer duplikat
       html = html.replace(/<footer[\s\S]*?<\/footer>/gi, '');
 
       const wrapper = document.createElement('div');
@@ -38,18 +54,16 @@ function loadPage(url, push = true) {
       window.scrollTo(0, 0);
       attachLinkListeners();
 
-      // update URL TANPA #
       if (push) {
-        history.pushState({}, '', url);
+        history.pushState(
+          { path: url.replace(base,'') || '/' },
+          '',
+          url
+        );
       }
     })
-    .catch(err => {
-      pageHolder.innerHTML = `
-        <div style="padding:2em;background:#fee;color:#900">
-          <strong>Error loading page!</strong><br>
-          ${err.message}
-        </div>`;
-      console.error(err);
+    .catch(() => {
+      render404(push);
     });
 }
 
@@ -60,9 +74,8 @@ function attachLinkListeners() {
   document.querySelectorAll('a[href^="/"]').forEach(a => {
     if (a.dataset.spa) return;
 
-    // abaikan external & anchor
     if (!a.href.startsWith(window.location.origin)) return;
-    if (a.getAttribute('target') === '_blank') return;
+    if (a.target === '_blank') return;
 
     a.dataset.spa = "true";
 
@@ -70,7 +83,6 @@ function attachLinkListeners() {
       e.preventDefault();
       let url = a.getAttribute('href');
 
-      // pastikan baseurl
       if (!url.startsWith(base)) {
         url = base + url;
       }
@@ -83,8 +95,14 @@ function attachLinkListeners() {
 /* =========================
    BACK / FORWARD
 ========================= */
-window.addEventListener('popstate', () => {
-  loadPage(location.pathname, false);
+window.addEventListener('popstate', e => {
+  if (!e.state || e.state.path === '/404') {
+    render404(false);
+    return;
+  }
+
+  const path = base + e.state.path;
+  loadPage(path, false);
 });
 
 /* =========================
@@ -92,7 +110,14 @@ window.addEventListener('popstate', () => {
 ========================= */
 window.addEventListener('DOMContentLoaded', () => {
   attachLinkListeners();
-  loadPage(location.pathname, false);
+
+  const path = location.pathname;
+
+  if (path.endsWith('/404')) {
+    render404(false);
+  } else {
+    loadPage(path, false);
+  }
 });
 </script>
 
