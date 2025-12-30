@@ -8,8 +8,6 @@
     <!-- Konten single-page -->
     <div id="page_holder"></div>
 
-    <script src="{{ '/assets/js/jquery.min.js' | relative_url }}"></script>
-    <script src="{{ '/assets/js/pagify.js' | relative_url }}"></script>
     <script>
       $.getJSON('{{ "/html.json" | relative_url }}', function(data) {
         $('#page_holder').pagify({
