@@ -26,4 +26,4 @@ some lined
 
 <hr>
 
-<a href="/">Back to home</a>
+<a href="{{ /blog/my_post | relative_url }}">Lihat semua post</a>
