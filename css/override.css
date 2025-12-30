@@ -31,13 +31,26 @@ code {
   position: relative;  
   overflow: hidden;  
 }  
-  
-.page-content {  
-  transform: translateX(100%); /* mulai di kanan */  
-  transition: transform 0.4s ease-in-out;  
-}  
-.page-content.active {  
-  transform: translateX(0); /* geser ke posisi normal */  
+
+/* page baru */
+.page-content {
+  opacity: 0;
+  transform: translateX(24px);
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease;
+}
+
+/* saat aktif */
+.page-content.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* page lama keluar */
+.page-content.exit {
+  opacity: 0;
+  transform: translateX(-24px);
 }
 
 /* Semua gambar di page_holder responsif */
