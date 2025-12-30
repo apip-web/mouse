@@ -12,78 +12,71 @@
 const pageHolder = document.getElementById('page_holder');
 const base = "{{ site.baseurl }}"; // "/mouse"
 
-// Fungsi fade-in sederhana
-function fadeIn(el) {
-  let op = 0;
-  const fade = setInterval(() => {
-    op += 0.1;
-    el.style.opacity = op;
-    if(op >= 1) clearInterval(fade);
-  }, 30);
-}
-
 // Fungsi load halaman via fetch
-function loadPage(url) {  
-  // homepage special case  
-  if(url === base + '/' || url === base) url = base + '/';  
-  
-  fetch(url)  
-    .then(res => {  
-      if(!res.ok) throw new Error('Page not found: ' + url);  
-      return res.text();  
-    })  
-    .then(html => {  
-      html = html.replace(/<footer[\s\S]*?<\/footer>/gi,'');  
-  
-      // Buat container baru untuk animasi slide  
-      const wrapper = document.createElement('div');  
-      wrapper.className = 'page-content';  
-      wrapper.innerHTML = html;  
-  
-      // Kosongkan page_holder dulu  
-      pageHolder.innerHTML = '';  
-      pageHolder.appendChild(wrapper);  
-  
-      // Force reflow supaya transition bekerja  
-      wrapper.getBoundingClientRect();  
-  
-      // Tambahkan kelas active → slide dari kanan  
-      wrapper.classList.add('active');  
-  
-      window.scrollTo(0,0);  
-      attachLinkListeners();  
-  
-    })  
-    .catch(err => {  
-      pageHolder.innerHTML = `<div style="padding:2em; background:#fee; color:#900;">  
-        <strong>Error loading page!</strong><br>${err.message}  
-      </div>`;  
-      console.error(err);  
-    });  
+function loadPage(url) {
+  fetch(url)
+    .then(res => {
+      if(!res.ok) throw new Error('Page not found: ' + url);
+      return res.text();
+    })
+    .then(html => {
+      html = html.replace(/<footer[\s\S]*?<\/footer>/gi,'');
+
+      // Konten lama keluar
+      const oldContent = pageHolder.querySelector('.page-content');
+      if(oldContent) {
+        oldContent.classList.add('out');
+        setTimeout(() => oldContent.remove(), 400);
+      }
+
+      // Konten baru
+      const wrapper = document.createElement('div');
+      wrapper.className = 'page-content';
+      wrapper.innerHTML = html;
+      pageHolder.appendChild(wrapper);
+
+      // Force reflow supaya transition jalan
+      wrapper.getBoundingClientRect();
+
+      wrapper.classList.add('active');
+
+      window.scrollTo(0,0);
+      attachLinkListeners();
+
+    })
+    .catch(err => {
+      pageHolder.innerHTML = `<div style="padding:2em; background:#fee; color:#900;">
+        <strong>Error loading page!</strong><br>${err.message}
+      </div>`;
+      console.error(err);
+    });
 }
 
-// Tangkap semua link internal
+// Pasang listener link internal
 function attachLinkListeners() {
-  document.querySelectorAll('a[href^="/"]').forEach(a => {
-    if (!a.dataset.spaced && a.href.includes(window.location.origin)) {
-      a.dataset.spaced = "true";
+  document.querySelectorAll('a[href^="{{ site.baseurl }}/"]').forEach(a => {
+    if(a.href.includes(window.location.origin)) {
       a.addEventListener('click', e => {
         e.preventDefault();
-        let url = a.getAttribute('href');
+        let href = a.getAttribute('href');
 
-        // homepage special case
-        if(url === base + '/' || url === base) {
-          url = base + '/';
+        // Tambahkan index.html jika berakhiran /
+        if(href.endsWith('/')) href += 'index.html';
+
+        // Hitung hash bersih
+        let relativePath = href.replace(base,'').replace(/^\/|\/index\.html$/g,'') || 'home';
+        window.location.hash = relativePath;
+
+        // Build fetch path
+        let fetchPath = base + '/' + (relativePath === 'home' ? '' : relativePath + '/index.html');
+        if(relativePath === 'home') {
+          // homepage → pakai content langsung
+          pageHolder.innerHTML = `{{ content | strip_newlines | jsonify | raw }}`;
+          attachLinkListeners();
+          window.scrollTo(0,0);
         } else {
-          // tambahkan index.html kalau link berakhiran /
-          if(url.endsWith('/')) url += 'index.html';
+          loadPage(fetchPath);
         }
-
-        const hash = url.replace(base,'').replace(/^\/|\/index\.html$/g,'') || 'home';
-        window.location.hash = hash;
-
-        const fetchPath = (hash === 'home') ? base + '/' : base + '/' + hash + '/index.html';
-        loadPage(fetchPath);
       });
     }
   });
@@ -91,13 +84,19 @@ function attachLinkListeners() {
 
 // Load halaman awal sesuai hash
 function initPage() {
-  let hash = window.location.hash.slice(1) || 'home';
-  if(hash === 'home') {
-    attachLinkListeners(); // homepage sudah ada konten
-  } else {
-    const fetchPath = base + '/' + hash + '/index.html';
-    loadPage(fetchPath);
+  let hash = window.location.hash.slice(1);
+
+  if(!hash || hash === 'home') {
+    // homepage → pakai content default
+    pageHolder.innerHTML = `{{ content | strip_newlines | jsonify | raw }}`;
+    attachLinkListeners();
+    window.scrollTo(0,0);
+    return;
   }
+
+  // halaman lain → fetch
+  let fetchPath = base + '/' + hash + '/index.html';
+  loadPage(fetchPath);
 }
 
 window.addEventListener('hashchange', initPage);
