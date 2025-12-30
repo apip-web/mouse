@@ -26,4 +26,4 @@ some lined
 
 <hr>
 
-<a href="{{ /blog/my-post | relative_url }}">Lihat semua post</a>
+<a href="{{ '/blog/my-post' | relative_url }}">Lihat semua post</a>
