@@ -3,76 +3,100 @@
 {% include head.html %}
 <body>
 
-  <!-- Konten AJAX -->
-  <div id="page_holder"></div>
+  <!-- Konten SPA -->
+  <div id="page_holder">
+    {{ content }} <!-- Konten homepage langsung muncul -->
+  </div>
 
-<script>  
-const pageHolder = document.getElementById('page_holder');  
-const base = "{{ site.baseurl }}"; // "/mouse"
+<script>
+const pageHolder = document.getElementById('page_holder');
+const base = "{{ site.baseurl }}"; // contoh: "/mouse"
 
-// Fungsi load halaman via fetch  
-function loadPage(url) {  
-  fetch(url)  
-    .then(res => {  
-      if (!res.ok) throw new Error('Page not found: ' + url);  
-      return res.text();  
-    })  
-    .then(html => {  
-      pageHolder.style.opacity = 0;  
-      pageHolder.innerHTML = html;  
-      let op = 0;  
-      const fadeIn = setInterval(() => {  
-        op += 0.1;  
-        pageHolder.style.opacity = op;  
-        if(op >= 1) clearInterval(fadeIn);  
-      }, 30);  
-      window.scrollTo(0,0);  
-    })  
-    .catch(err => {  
-      pageHolder.innerHTML = `<p style="color:red;">${err.message}</p>`;  
-      console.error(err);  
-    });  
-}  
+// Fungsi fade-in sederhana
+function fadeIn(el) {
+  let op = 0;
+  const fade = setInterval(() => {
+    op += 0.1;
+    el.style.opacity = op;
+    if(op >= 1) clearInterval(fade);
+  }, 30);
+}
 
-// Pasang listener setelah DOM selesai  
-function attachLinkListeners() {  
-  document.querySelectorAll('a[href^="/"]').forEach(a => {  
-    if (a.href.includes(window.location.origin)) {  
-      a.addEventListener('click', e => {  
-        e.preventDefault();  
-        let url = a.getAttribute('href');  
+// Fungsi load halaman via fetch
+function loadPage(url) {
+  fetch(url)
+    .then(res => {
+      if(!res.ok) throw new Error('Page not found: ' + url);
+      return res.text();
+    })
+    .then(html => {
+      // Hapus footer di konten
+      html = html.replace(/<footer[\s\S]*?<\/footer>/gi,'');
+      pageHolder.style.opacity = 0;
+      pageHolder.innerHTML = html;
+      fadeIn(pageHolder);
+      window.scrollTo(0,0);
+      attachLinkListeners(); // Pasang listener untuk link baru di halaman
+    })
+    .catch(err => {
+      pageHolder.innerHTML = `<div style="padding:2em; background:#fee; color:#900;">
+        <strong>Error loading page!</strong><br>${err.message}
+      </div>`;
+      console.error(err);
+    });
+}
 
-        // Hilangkan base di awal jika ada
+// Tangkap semua link internal
+function attachLinkListeners() {
+  document.querySelectorAll('a[href^="/"]').forEach(a => {
+    if(a.href.includes(window.location.origin)) {
+      a.onclick = e => {
+        e.preventDefault();
+        let url = a.getAttribute('href');
+
+        // Hilangkan base di awal
         if(url.startsWith(base)) url = url.slice(base.length);
 
-        // Tambahkan index.html jika link berakhiran /  
-        if (url.endsWith('/')) url += 'index.html';  
+        // Tambahkan index.html jika link berakhiran /
+        if(url.endsWith('/')) url += 'index.html';
 
-        // Update hash berdasarkan path terakhir  
-        const hash = url.replace(/^\/|\/index\.html$/g,'') || 'home';  
-        window.location.hash = hash;  
+        // Hitung hash bersih
+        const hash = url.replace(/^\/|\/index\.html$/g,'') || 'home';
+        window.location.hash = hash;
 
-        // Build path untuk fetch dengan baseurl
+        // Bangun fetch path
         const fetchPath = base + '/' + (hash === 'home' ? 'index.html' : hash + '/index.html');
-        loadPage(fetchPath);  
-      });  
-    }  
-  });  
-}  
+        loadPage(fetchPath);
+      };
+    }
+  });
+}
 
-// Load halaman awal sesuai hash  
-function initPage() {  
-  let hash = window.location.hash.slice(1) || 'home';  
-  let url = base + '/' + (hash === 'home' ? 'index.html' : hash + '/index.html');  
-  loadPage(url);  
+// Load halaman awal sesuai hash
+function initPage() {
+  let hash = window.location.hash.slice(1) || 'home';
+  const fetchPath = base + '/' + (hash === 'home' ? 'index.html' : hash + '/index.html');
+  
+  // Kalau hash = home, biarkan {{ content }} muncul
+  if(hash === 'home') {
+    attachLinkListeners();
+  } else {
+    loadPage(fetchPath);
+  }
+}
 
-  // Pasang listener link baru setelah load  
-  setTimeout(attachLinkListeners, 100);  
-}  
-
-window.addEventListener('hashchange', initPage);  
-window.addEventListener('DOMContentLoaded', initPage);  
+window.addEventListener('hashchange', initPage);
+window.addEventListener('DOMContentLoaded', initPage);
 </script>
+
+<footer class="site-footer">
+  <p>&copy; 2025 Apip. All rights reserved.</p>
+  <nav>
+    <a href="{{ '/' | relative_url }}">Home</a> |
+    <a href="{{ '/blog/' | relative_url }}">Blog</a> |
+    <a href="{{ '/about/' | relative_url }}">About</a>
+  </nav>
+</footer>
 
 </body>
 </html>
