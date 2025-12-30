@@ -6,40 +6,60 @@
 <div id="page_holder"></div>
 
 <script>
-const base = "{{ site.baseurl }}"; // "/mouse"
 const pageHolder = document.getElementById('page_holder');
 
+// Fungsi load halaman via fetch
 function loadPage(url) {
   fetch(url)
-    .then(res => { if (!res.ok) throw new Error('Page not found'); return res.text(); })
+    .then(res => {
+      if (!res.ok) throw new Error('Page not found');
+      return res.text();
+    })
     .then(html => {
       pageHolder.style.opacity = 0;
       pageHolder.innerHTML = html;
       let op = 0;
-      const fadeIn = setInterval(() => { op += 0.1; pageHolder.style.opacity = op; if(op>=1) clearInterval(fadeIn); }, 30);
+      const fadeIn = setInterval(() => {
+        op += 0.1;
+        pageHolder.style.opacity = op;
+        if(op >= 1) clearInterval(fadeIn);
+      }, 30);
       window.scrollTo(0,0);
     })
-    .catch(err => { pageHolder.innerHTML = '<p>Page not found.</p>'; console.error(err); });
+    .catch(err => {
+      pageHolder.innerHTML = '<p>Page not found.</p>';
+      console.error(err);
+    });
 }
 
+// Pasang listener setelah DOM selesai
 function attachLinkListeners() {
   document.querySelectorAll('a[href^="/"]').forEach(a => {
-    if(a.href.includes(window.location.origin)){
-      a.addEventListener('click', e=>{
+    if (a.href.includes(window.location.origin)) {
+      a.addEventListener('click', e => {
         e.preventDefault();
         let url = a.getAttribute('href');
-        if(url.endsWith('/')) url += 'index.html';
-        window.location.hash = url.replace(/^\/|\/index\.html$/g,'') || 'home';
-        loadPage(base + url);
+
+        // Tambahkan index.html jika link berakhiran /
+        if (url.endsWith('/')) url += 'index.html';
+
+        // Update hash berdasarkan path terakhir
+        const hash = url.replace(/^\/|\/index\.html$/g,'') || 'home';
+        window.location.hash = hash;
+
+        loadPage(url);
       });
     }
   });
 }
 
-function initPage(){
+// Load halaman awal sesuai hash
+function initPage() {
   let hash = window.location.hash.slice(1) || 'home';
-  let url = base + '/' + (hash==='home'?'index.html':hash+'/index.html');
+  let url = '/' + (hash === 'home' ? 'index.html' : hash + '/index.html');
   loadPage(url);
+
+  // Pasang listener link baru setelah load
   setTimeout(attachLinkListeners, 100);
 }
 
