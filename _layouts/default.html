@@ -6,9 +6,10 @@
 <div id="page_holder"></div>
 
 <script>
+// Target div
 const pageHolder = document.getElementById('page_holder');
 
-// Fungsi load halaman via AJAX
+// Fungsi load halaman via fetch
 function loadPage(url) {
   fetch(url)
     .then(res => {
@@ -16,7 +17,16 @@ function loadPage(url) {
       return res.text();
     })
     .then(html => {
+      // Animasi fade in sederhana
+      pageHolder.style.opacity = 0;
       pageHolder.innerHTML = html;
+      let op = 0;
+      const fadeIn = setInterval(() => {
+        op += 0.1;
+        pageHolder.style.opacity = op;
+        if(op >= 1) clearInterval(fadeIn);
+      }, 30);
+
       window.scrollTo(0,0);
     })
     .catch(err => {
@@ -27,17 +37,16 @@ function loadPage(url) {
 
 // Tangkap semua link internal otomatis
 document.querySelectorAll('a[href^="/"]').forEach(a => {
-  // Abaikan link anchor (#) atau eksternal
   if (a.href.includes(window.location.origin)) {
     a.addEventListener('click', e => {
       e.preventDefault();
-      const relativeUrl = a.getAttribute('href');
+      const url = a.getAttribute('href');
 
-      // Update hash berdasarkan path terakhir, misal /about/ -> #about
-      const hash = relativeUrl.replace(/^\/|\/$/g,''); 
-      window.location.hash = hash || 'home';
+      // Update hash berdasarkan path terakhir
+      const hash = url.replace(/^\/|\/$/g,'') || 'home';
+      window.location.hash = hash;
 
-      loadPage(relativeUrl);
+      loadPage(url);
     });
   }
 });
