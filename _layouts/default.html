@@ -5,17 +5,55 @@
 
     {% include root %}
 
-    <!-- Konten single-page -->
-    <div id="page_holder"></div>
+<div id="page_holder"></div>
 
-    <script>
-      $.getJSON('{{ "/html.json" | relative_url }}', function(data) {
-        $('#page_holder').pagify({
-          pages: data,
-          default: 'home'
-        });
-      });
-    </script>
+<script>
+const pageHolder = document.getElementById('page_holder');
+
+// Fungsi load halaman via AJAX
+function loadPage(url) {
+  fetch(url)
+    .then(res => {
+      if (!res.ok) throw new Error('Page not found');
+      return res.text();
+    })
+    .then(html => {
+      pageHolder.innerHTML = html;
+      window.scrollTo(0,0);
+    })
+    .catch(err => {
+      pageHolder.innerHTML = '<p>Page not found.</p>';
+      console.error(err);
+    });
+}
+
+// Tangkap semua link internal otomatis
+document.querySelectorAll('a[href^="/"]').forEach(a => {
+  // Abaikan link anchor (#) atau eksternal
+  if (a.href.includes(window.location.origin)) {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const relativeUrl = a.getAttribute('href');
+
+      // Update hash berdasarkan path terakhir, misal /about/ -> #about
+      const hash = relativeUrl.replace(/^\/|\/$/g,''); 
+      window.location.hash = hash || 'home';
+
+      loadPage(relativeUrl);
+    });
+  }
+});
+
+// Load halaman awal sesuai hash
+function initPage() {
+  let hash = window.location.hash.slice(1) || 'index.html';
+  let url = '/' + (hash === 'home' ? 'index.html' : hash + '/index.html');
+  loadPage(url);
+}
+
+window.addEventListener('hashchange', initPage);
+window.addEventListener('DOMContentLoaded', initPage);
+</script>
 
     {{ content }}
 
