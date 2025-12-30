@@ -3,21 +3,6 @@
 {% include head.html %}
 <body>
 
-<style>
-#page_holder {
-  position: relative;
-  overflow: hidden;
-}
-
-.page-content {
-  transform: translateX(100%); /* mulai di kanan */
-  transition: transform 0.4s ease-in-out;
-}
-.page-content.active {
-  transform: translateX(0); /* geser ke posisi normal */
-}
-</style>
-
   <!-- Konten SPA -->
   <div id="page_holder">
     {{ content }} <!-- Konten homepage langsung muncul -->
@@ -39,7 +24,6 @@ function fadeIn(el) {
 
 // Fungsi load halaman via fetch
 function loadPage(url) {
-  // homepage special case
   if(url === base + '/' || url === base) url = base + '/';
 
   fetch(url)
@@ -50,19 +34,24 @@ function loadPage(url) {
     .then(html => {
       html = html.replace(/<footer[\s\S]*?<\/footer>/gi,'');
 
-      // Buat container baru untuk animasi slide
+      // Konten lama (jika ada) → fade out + slide keluar
+      const oldContent = pageHolder.querySelector('.page-content');
+      if(oldContent) {
+        oldContent.classList.add('out');
+        // Hapus lama setelah animasi selesai
+        setTimeout(() => oldContent.remove(), 400);
+      }
+
+      // Buat konten baru
       const wrapper = document.createElement('div');
       wrapper.className = 'page-content';
       wrapper.innerHTML = html;
-
-      // Kosongkan page_holder dulu
-      pageHolder.innerHTML = '';
       pageHolder.appendChild(wrapper);
 
       // Force reflow supaya transition bekerja
       wrapper.getBoundingClientRect();
 
-      // Tambahkan kelas active → slide dari kanan
+      // Tambahkan kelas active → fade in + slide dari kanan
       wrapper.classList.add('active');
 
       window.scrollTo(0,0);
