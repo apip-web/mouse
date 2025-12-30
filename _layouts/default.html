@@ -6,7 +6,6 @@
 <div id="page_holder"></div>
 
 <script>
-// Target div
 const pageHolder = document.getElementById('page_holder');
 
 // Fungsi load halaman via fetch
@@ -17,7 +16,6 @@ function loadPage(url) {
       return res.text();
     })
     .then(html => {
-      // Animasi fade in sederhana
       pageHolder.style.opacity = 0;
       pageHolder.innerHTML = html;
       let op = 0;
@@ -26,7 +24,6 @@ function loadPage(url) {
         pageHolder.style.opacity = op;
         if(op >= 1) clearInterval(fadeIn);
       }, 30);
-
       window.scrollTo(0,0);
     })
     .catch(err => {
@@ -35,27 +32,35 @@ function loadPage(url) {
     });
 }
 
-// Tangkap semua link internal otomatis
-document.querySelectorAll('a[href^="/"]').forEach(a => {
-  if (a.href.includes(window.location.origin)) {
-    a.addEventListener('click', e => {
-      e.preventDefault();
-      const url = a.getAttribute('href');
+// Pasang listener setelah DOM selesai
+function attachLinkListeners() {
+  document.querySelectorAll('a[href^="/"]').forEach(a => {
+    if (a.href.includes(window.location.origin)) {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        let url = a.getAttribute('href');
 
-      // Update hash berdasarkan path terakhir
-      const hash = url.replace(/^\/|\/$/g,'') || 'home';
-      window.location.hash = hash;
+        // Tambahkan index.html jika link berakhiran /
+        if (url.endsWith('/')) url += 'index.html';
 
-      loadPage(url);
-    });
-  }
-});
+        // Update hash berdasarkan path terakhir
+        const hash = url.replace(/^\/|\/index\.html$/g,'') || 'home';
+        window.location.hash = hash;
+
+        loadPage(url);
+      });
+    }
+  });
+}
 
 // Load halaman awal sesuai hash
 function initPage() {
-  let hash = window.location.hash.slice(1) || 'index.html';
+  let hash = window.location.hash.slice(1) || 'home';
   let url = '/' + (hash === 'home' ? 'index.html' : hash + '/index.html');
   loadPage(url);
+
+  // Pasang listener link baru setelah load
+  setTimeout(attachLinkListeners, 100);
 }
 
 window.addEventListener('hashchange', initPage);
