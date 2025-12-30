@@ -23,47 +23,43 @@ function fadeIn(el) {
 }
 
 // Fungsi load halaman via fetch
-function loadPage(url) {
-  if(url === base + '/' || url === base) url = base + '/';
-
-  fetch(url)
-    .then(res => {
-      if(!res.ok) throw new Error('Page not found: ' + url);
-      return res.text();
-    })
-    .then(html => {
-      html = html.replace(/<footer[\s\S]*?<\/footer>/gi,'');
-
-      // Konten lama (jika ada) → fade out + slide keluar
-      const oldContent = pageHolder.querySelector('.page-content');
-      if(oldContent) {
-        oldContent.classList.add('out');
-        // Hapus lama setelah animasi selesai
-        setTimeout(() => oldContent.remove(), 400);
-      }
-
-      // Buat konten baru
-      const wrapper = document.createElement('div');
-      wrapper.className = 'page-content';
-      wrapper.innerHTML = html;
-      pageHolder.appendChild(wrapper);
-
-      // Force reflow supaya transition bekerja
-      wrapper.getBoundingClientRect();
-
-      // Tambahkan kelas active → fade in + slide dari kanan
-      wrapper.classList.add('active');
-
-      window.scrollTo(0,0);
-      attachLinkListeners();
-
-    })
-    .catch(err => {
-      pageHolder.innerHTML = `<div style="padding:2em; background:#fee; color:#900;">
-        <strong>Error loading page!</strong><br>${err.message}
-      </div>`;
-      console.error(err);
-    });
+function loadPage(url) {  
+  // homepage special case  
+  if(url === base + '/' || url === base) url = base + '/';  
+  
+  fetch(url)  
+    .then(res => {  
+      if(!res.ok) throw new Error('Page not found: ' + url);  
+      return res.text();  
+    })  
+    .then(html => {  
+      html = html.replace(/<footer[\s\S]*?<\/footer>/gi,'');  
+  
+      // Buat container baru untuk animasi slide  
+      const wrapper = document.createElement('div');  
+      wrapper.className = 'page-content';  
+      wrapper.innerHTML = html;  
+  
+      // Kosongkan page_holder dulu  
+      pageHolder.innerHTML = '';  
+      pageHolder.appendChild(wrapper);  
+  
+      // Force reflow supaya transition bekerja  
+      wrapper.getBoundingClientRect();  
+  
+      // Tambahkan kelas active → slide dari kanan  
+      wrapper.classList.add('active');  
+  
+      window.scrollTo(0,0);  
+      attachLinkListeners();  
+  
+    })  
+    .catch(err => {  
+      pageHolder.innerHTML = `<div style="padding:2em; background:#fee; color:#900;">  
+        <strong>Error loading page!</strong><br>${err.message}  
+      </div>`;  
+      console.error(err);  
+    });  
 }
 
 // Tangkap semua link internal
