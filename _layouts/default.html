@@ -39,19 +39,25 @@ function loadPage(url) {
     .then(html => {
       // Hapus footer jika ada
       html = html.replace(/<footer[\s\S]*?<\/footer>/gi,'');
-      
-      // Fade out dulu
+
+      // Set opacity 0 → paksa browser render
       pageHolder.style.opacity = 0;
 
-      setTimeout(() => {
-        pageHolder.innerHTML = html;
+      // Tunggu frame berikutnya agar CSS transition berlaku
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          pageHolder.innerHTML = html;
+          window.scrollTo(0,0);
 
-        // Fade in lembut via CSS transition
-        pageHolder.style.opacity = 1;
+          // Fade in
+          requestAnimationFrame(() => {
+            pageHolder.style.opacity = 1;
+          });
 
-        window.scrollTo(0,0);
-        attachLinkListeners(); // pasang listener baru
-      }, 200); // tunggu 0.2s untuk fade out
+          attachLinkListeners();
+        }, 50); // delay kecil agar fade out terlihat
+      });
+
     })
     .catch(err => {
       pageHolder.innerHTML = `<div style="padding:2em; background:#fee; color:#900;">
