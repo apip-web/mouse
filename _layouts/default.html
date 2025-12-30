@@ -12,25 +12,18 @@
 const pageHolder = document.getElementById('page_holder');
 const base = "{{ site.baseurl }}"; // "/mouse"
 
-// Fungsi fade-in sederhana
-function fadeIn(el) {
-  let op = 0;
-  const fade = setInterval(() => {
-    op += 0.1;
-    el.style.opacity = op;
-    if(op >= 1) clearInterval(fade);
-  }, 30);
-}
-
-// Fungsi load halaman via fetch
-function loadPage(path, push = true) {
-  fetch(path)
+/* =========================
+   LOAD PAGE
+========================= */
+function loadPage(url, push = true) {
+  fetch(url)
     .then(res => {
-      if(!res.ok) throw new Error('Page not found: ' + path);
+      if (!res.ok) throw new Error('Page not found: ' + url);
       return res.text();
     })
     .then(html => {
-      html = html.replace(/<footer[\s\S]*?<\/footer>/gi,'');
+      // buang footer duplikat
+      html = html.replace(/<footer[\s\S]*?<\/footer>/gi, '');
 
       const wrapper = document.createElement('div');
       wrapper.className = 'page-content';
@@ -42,66 +35,64 @@ function loadPage(path, push = true) {
       wrapper.getBoundingClientRect();
       wrapper.classList.add('active');
 
-      window.scrollTo(0,0);
+      window.scrollTo(0, 0);
       attachLinkListeners();
 
-      // update URL tanpa reload
-      if(push) {
-        let url = path.replace(base,'').replace(/\/index\.html$/,'');
-        history.pushState({ path: url }, '', base + url);
+      // update URL TANPA #
+      if (push) {
+        history.pushState({}, '', url);
       }
-
     })
     .catch(err => {
-      pageHolder.innerHTML = `<div style="padding:2em; background:#fee; color:#900;">
-        <strong>Error loading page!</strong><br>${err.message}
-      </div>`;
+      pageHolder.innerHTML = `
+        <div style="padding:2em;background:#fee;color:#900">
+          <strong>Error loading page!</strong><br>
+          ${err.message}
+        </div>`;
       console.error(err);
     });
 }
 
-// Tangkap semua link internal
+/* =========================
+   INTERCEPT LINK
+========================= */
 function attachLinkListeners() {
   document.querySelectorAll('a[href^="/"]').forEach(a => {
-    if (!a.dataset.spaced && a.href.includes(window.location.origin)) {
-      a.dataset.spaced = "true";
-      a.addEventListener('click', e => {
-        e.preventDefault();
-        let url = a.getAttribute('href');
+    if (a.dataset.spa) return;
 
-        // homepage special case
-        if(url === base || url === base + '/') {
-          loadPage(base + '/', true);
-        } else {
-          if(url.endsWith('/')) url += 'index.html';
-          loadPage(url, true);
-        }
-      });
-    }
+    // abaikan external & anchor
+    if (!a.href.startsWith(window.location.origin)) return;
+    if (a.getAttribute('target') === '_blank') return;
+
+    a.dataset.spa = "true";
+
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      let url = a.getAttribute('href');
+
+      // pastikan baseurl
+      if (!url.startsWith(base)) {
+        url = base + url;
+      }
+
+      loadPage(url, true);
+    });
   });
 }
 
-// Tangani back/forward browser
-window.addEventListener('popstate', e => {
-  if(e.state && e.state.path) {
-    let path = base + e.state.path;
-    // homepage special case
-    if(path === base + '/') path = base + '/';
-    loadPage(path, false);
-  } else {
-    loadPage(base + '/', false);
-  }
+/* =========================
+   BACK / FORWARD
+========================= */
+window.addEventListener('popstate', () => {
+  loadPage(location.pathname, false);
 });
 
-// Load halaman awal
+/* =========================
+   INITIAL LOAD
+========================= */
 window.addEventListener('DOMContentLoaded', () => {
   attachLinkListeners();
-  let path = location.pathname;
-  if(path === base || path === base + '/') {
-    loadPage(base + '/', false);
-  } else {
-    loadPage(path, false);
-  }
+  loadPage(location.pathname, false);
 });
 </script>
 
