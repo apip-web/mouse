@@ -3,6 +3,13 @@
 {% include head.html %}
 <body>
 
+<style>
+#page_holder {
+  opacity: 1;
+  transition: opacity 0.4s ease-in-out; /* durasi 0.4s, lembut */
+}
+</style>
+
   <!-- Konten SPA -->
   <div id="page_holder">
     {{ content }} <!-- Konten homepage langsung muncul -->
@@ -30,13 +37,21 @@ function loadPage(url) {
       return res.text();
     })
     .then(html => {
-      // Hapus footer jika ada di konten statis
+      // Hapus footer jika ada
       html = html.replace(/<footer[\s\S]*?<\/footer>/gi,'');
+      
+      // Fade out dulu
       pageHolder.style.opacity = 0;
-      pageHolder.innerHTML = html;
-      fadeIn(pageHolder);
-      window.scrollTo(0,0);
-      attachLinkListeners(); // pasang listener untuk link baru
+
+      setTimeout(() => {
+        pageHolder.innerHTML = html;
+
+        // Fade in lembut via CSS transition
+        pageHolder.style.opacity = 1;
+
+        window.scrollTo(0,0);
+        attachLinkListeners(); // pasang listener baru
+      }, 200); // tunggu 0.2s untuk fade out
     })
     .catch(err => {
       pageHolder.innerHTML = `<div style="padding:2em; background:#fee; color:#900;">
