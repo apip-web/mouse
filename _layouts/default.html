@@ -10,23 +10,24 @@
 const pageHolder = document.getElementById('page_holder');
 const base = "{{ site.baseurl }}"; // "/mouse"
 
-function loadPage(url) {
-  fetch(url)
+// Load halaman via fetch
+function loadPage(path) {
+  fetch(path)
     .then(res => {
       if(!res.ok) throw new Error('Page not found');
       return res.text();
     })
     .then(html => {
-      // Hapus footer jika ada di halaman statis
+      // Hapus footer jika ada di konten statis
       html = html.replace(/<footer[\s\S]*?<\/footer>/gi, '');
       pageHolder.style.opacity = 0;
       pageHolder.innerHTML = html;
       let op = 0;
-      const fadeIn = setInterval(()=>{
+      const fadeIn = setInterval(() => {
         op += 0.1;
         pageHolder.style.opacity = op;
-        if(op>=1) clearInterval(fadeIn);
-      },30);
+        if(op >= 1) clearInterval(fadeIn);
+      }, 30);
       window.scrollTo(0,0);
     })
     .catch(err => {
@@ -35,34 +36,37 @@ function loadPage(url) {
     });
 }
 
+// Tangkap semua link internal
 function attachLinkListeners() {
   document.querySelectorAll('a[href^="/"]').forEach(a => {
     if(a.href.includes(window.location.origin)) {
       a.addEventListener('click', e => {
         e.preventDefault();
-        let url = a.getAttribute('href');
+        let href = a.getAttribute('href');
 
-        if(url.endsWith('/')) url += 'index.html';
+        // Tambahkan index.html jika link berakhiran /
+        if(href.endsWith('/')) href += 'index.html';
 
-        // Hilangkan baseurl dari hash
-        let hash = url.replace(base,'').replace(/^\/|\/index\.html$/g,'') || 'home';
-        window.location.hash = hash;
+        // Hitung hash bersih tanpa baseurl
+        let relativePath = href.replace(base,'').replace(/^\/|\/index\.html$/g,'') || 'home';
+        window.location.hash = relativePath;
 
-        // Load page dengan baseurl
-        const fetchUrl = base + '/' + (hash==='home'?'index.html':hash+'/index.html');
-        loadPage(fetchUrl);
+        // Build path untuk fetch
+        let fetchPath = base + '/' + (relativePath === 'home' ? 'index.html' : relativePath + '/index.html');
+        loadPage(fetchPath);
       });
     }
   });
 }
 
+// Load halaman awal
 function initPage() {
   let hash = window.location.hash.slice(1) || 'home';
-  let fetchUrl = base + '/' + (hash==='home'?'index.html':hash+'/index.html');
-  loadPage(fetchUrl);
+  let fetchPath = base + '/' + (hash === 'home' ? 'index.html' : hash + '/index.html');
+  loadPage(fetchPath);
 
-  // Pasang listener link setelah load
-  setTimeout(attachLinkListeners,100);
+  // Pasang listener
+  setTimeout(attachLinkListeners, 50);
 }
 
 window.addEventListener('hashchange', initPage);
