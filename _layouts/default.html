@@ -5,8 +5,16 @@
 
 <style>
 #page_holder {
-  opacity: 1;
-  transition: opacity 1s ease-in-out; /* durasi 0.4s, lembut */
+  position: relative;
+  overflow: hidden;
+}
+
+.page-content {
+  transform: translateX(100%); /* mulai di kanan */
+  transition: transform 0.4s ease-in-out;
+}
+.page-content.active {
+  transform: translateX(0); /* geser ke posisi normal */
 }
 </style>
 
@@ -32,9 +40,7 @@ function fadeIn(el) {
 // Fungsi load halaman via fetch
 function loadPage(url) {
   // homepage special case
-  if(url === base + '/' || url === base) {
-    url = base + '/'; // fetch /mouse/ langsung
-  }
+  if(url === base + '/' || url === base) url = base + '/';
 
   fetch(url)
     .then(res => {
@@ -43,18 +49,24 @@ function loadPage(url) {
     })
     .then(html => {
       html = html.replace(/<footer[\s\S]*?<\/footer>/gi,'');
-      pageHolder.style.opacity = 0;
 
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          pageHolder.innerHTML = html;
-          window.scrollTo(0,0);
-          requestAnimationFrame(() => {
-            pageHolder.style.opacity = 1;
-          });
-          attachLinkListeners();
-        }, 50);
-      });
+      // Buat container baru untuk animasi slide
+      const wrapper = document.createElement('div');
+      wrapper.className = 'page-content';
+      wrapper.innerHTML = html;
+
+      // Kosongkan page_holder dulu
+      pageHolder.innerHTML = '';
+      pageHolder.appendChild(wrapper);
+
+      // Force reflow supaya transition bekerja
+      wrapper.getBoundingClientRect();
+
+      // Tambahkan kelas active → slide dari kanan
+      wrapper.classList.add('active');
+
+      window.scrollTo(0,0);
+      attachLinkListeners();
 
     })
     .catch(err => {
