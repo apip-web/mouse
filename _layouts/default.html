@@ -6,83 +6,72 @@
   <!-- Konten AJAX -->
   <div id="page_holder"></div>
 
-  <footer class="site-footer">
-    <p>&copy; 2025 Apip. All rights reserved.</p>
-    <nav>
-      <a href="{{ '/' | relative_url }}">Home</a> |
-      <a href="{{ '/blog/' | relative_url }}">Blog</a> |
-      <a href="{{ '/about/' | relative_url }}">About</a>
-    </nav>
-  </footer>
-
-<script>
-const pageHolder = document.getElementById('page_holder');
+<script>  
+const pageHolder = document.getElementById('page_holder');  
 const base = "{{ site.baseurl }}"; // "/mouse"
 
-// ===== Load halaman via fetch =====
-function loadPage(path) {
-  fetch(path)
-    .then(res => {
-      if(!res.ok) throw new Error('Page not found');
-      return res.text();
-    })
-    .then(html => {
-      // Hapus footer jika ada di konten statis
-      html = html.replace(/<footer[\s\S]*?<\/footer>/gi, '');
+// Fungsi load halaman via fetch  
+function loadPage(url) {  
+  fetch(url)  
+    .then(res => {  
+      if (!res.ok) throw new Error('Page not found: ' + url);  
+      return res.text();  
+    })  
+    .then(html => {  
+      pageHolder.style.opacity = 0;  
+      pageHolder.innerHTML = html;  
+      let op = 0;  
+      const fadeIn = setInterval(() => {  
+        op += 0.1;  
+        pageHolder.style.opacity = op;  
+        if(op >= 1) clearInterval(fadeIn);  
+      }, 30);  
+      window.scrollTo(0,0);  
+    })  
+    .catch(err => {  
+      pageHolder.innerHTML = `<p style="color:red;">${err.message}</p>`;  
+      console.error(err);  
+    });  
+}  
 
-      pageHolder.style.opacity = 0;
-      pageHolder.innerHTML = html;
+// Pasang listener setelah DOM selesai  
+function attachLinkListeners() {  
+  document.querySelectorAll('a[href^="/"]').forEach(a => {  
+    if (a.href.includes(window.location.origin)) {  
+      a.addEventListener('click', e => {  
+        e.preventDefault();  
+        let url = a.getAttribute('href');  
 
-      // Fade in sederhana
-      let op = 0;
-      const fadeIn = setInterval(() => {
-        op += 0.1;
-        pageHolder.style.opacity = op;
-        if(op >= 1) clearInterval(fadeIn);
-      }, 30);
+        // Hilangkan base di awal jika ada
+        if(url.startsWith(base)) url = url.slice(base.length);
 
-      window.scrollTo(0,0);
+        // Tambahkan index.html jika link berakhiran /  
+        if (url.endsWith('/')) url += 'index.html';  
 
-      // Pasang listener ke semua link baru di konten
-      attachLinkListeners();
-    })
-    .catch(err => {
-      pageHolder.innerHTML = '<p>Page not found.</p>';
-      console.error(err);
-    });
-}
+        // Update hash berdasarkan path terakhir  
+        const hash = url.replace(/^\/|\/index\.html$/g,'') || 'home';  
+        window.location.hash = hash;  
 
-// ===== Tangkap semua link internal =====
-function attachLinkListeners() {
-  document.querySelectorAll('a[href^="/"]').forEach(a => {
-    if(a.href.includes(window.location.origin)) {
-      a.onclick = e => {
-        e.preventDefault();
-        let href = a.getAttribute('href');
+        // Build path untuk fetch dengan baseurl
+        const fetchPath = base + '/' + (hash === 'home' ? 'index.html' : hash + '/index.html');
+        loadPage(fetchPath);  
+      });  
+    }  
+  });  
+}  
 
-        // Hilangkan baseurl di awal jika ada
-        if(href.startsWith(base)) href = href.slice(base.length);
+// Load halaman awal sesuai hash  
+function initPage() {  
+  let hash = window.location.hash.slice(1) || 'home';  
+  let url = base + '/' + (hash === 'home' ? 'index.html' : hash + '/index.html');  
+  loadPage(url);  
 
-        // Hilangkan slash di awal/akhir
-        let relativePath = href.replace(/^\/|\/$/g,'') || 'home';
+  // Pasang listener link baru setelah load  
+  setTimeout(attachLinkListeners, 100);  
+}  
 
-        // Update hash (hashchange listener akan loadPage)
-        window.location.hash = relativePath;
-      };
-    }
-  });
-}
-
-// ===== Handler hashchange =====
-function handleHashChange() {
-  let hash = window.location.hash.slice(1) || 'home';
-  const fetchPath = base + '/' + (hash === 'home' ? 'index.html' : hash + '/index.html');
-  loadPage(fetchPath);
-}
-
-// ===== Init =====
-window.addEventListener('DOMContentLoaded', handleHashChange);
-window.addEventListener('hashchange', handleHashChange);
+window.addEventListener('hashchange', initPage);  
+window.addEventListener('DOMContentLoaded', initPage);  
 </script>
 
 </body>
