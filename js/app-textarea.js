@@ -1,29 +1,30 @@
+function initTextareaApp() {
   const textarea = document.getElementById('pesan');
-  const saveBtn = document.getElementById('saveBtn');
-  const loadBtn = document.getElementById('loadBtn');
+  const saveBtn  = document.getElementById('saveBtn');
+  const loadBtn  = document.getElementById('loadBtn');
   const clearBtn = document.getElementById('clearBtn');
+
+  if (!textarea) return;
 
   const STORAGE_KEY = 'autosave_textarea';
 
-  // Load otomatis saat halaman dibuka
+  // load otomatis
   const saved = localStorage.getItem(STORAGE_KEY);
   if (saved !== null) {
     textarea.value = saved;
   }
 
-  // Autosave saat mengetik
+  // autosave
   textarea.addEventListener('input', () => {
     localStorage.setItem(STORAGE_KEY, textarea.value);
   });
 
-  // Save manual
-  saveBtn.addEventListener('click', () => {
+  saveBtn?.addEventListener('click', () => {
     localStorage.setItem(STORAGE_KEY, textarea.value);
     alert('Text saved!');
   });
 
-  // Load manual
-  loadBtn.addEventListener('click', () => {
+  loadBtn?.addEventListener('click', () => {
     const data = localStorage.getItem(STORAGE_KEY);
     if (data !== null) {
       textarea.value = data;
@@ -33,9 +34,9 @@
     }
   });
 
-  // Clear textarea + storage
-  clearBtn.addEventListener('click', () => {
+  clearBtn?.addEventListener('click', () => {
     textarea.value = '';
     localStorage.removeItem(STORAGE_KEY);
     alert('Cleared!');
   });
+}
