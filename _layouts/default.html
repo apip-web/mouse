@@ -10,7 +10,7 @@
 
 <script>
 const pageHolder = document.getElementById('page_holder');
-const base = "{{ site.baseurl }}"; // contoh: "/mouse"
+const base = "{{ site.baseurl }}"; // "/mouse"
 
 // Fungsi fade-in sederhana
 function fadeIn(el) {
@@ -30,13 +30,13 @@ function loadPage(url) {
       return res.text();
     })
     .then(html => {
-      // Hapus footer di konten
+      // Hapus footer jika ada di konten statis
       html = html.replace(/<footer[\s\S]*?<\/footer>/gi,'');
       pageHolder.style.opacity = 0;
       pageHolder.innerHTML = html;
       fadeIn(pageHolder);
       window.scrollTo(0,0);
-      attachLinkListeners(); // Pasang listener untuk link baru di halaman
+      attachLinkListeners(); // pasang listener untuk link baru
     })
     .catch(err => {
       pageHolder.innerHTML = `<div style="padding:2em; background:#fee; color:#900;">
@@ -49,8 +49,9 @@ function loadPage(url) {
 // Tangkap semua link internal
 function attachLinkListeners() {
   document.querySelectorAll('a[href^="/"]').forEach(a => {
-    if(a.href.includes(window.location.origin)) {
-      a.onclick = e => {
+    if (!a.dataset.spaced && a.href.includes(window.location.origin)) {
+      a.dataset.spaced = "true"; // pastikan listener tidak double
+      a.addEventListener('click', e => {
         e.preventDefault();
         let url = a.getAttribute('href');
 
@@ -67,7 +68,7 @@ function attachLinkListeners() {
         // Bangun fetch path
         const fetchPath = base + '/' + (hash === 'home' ? 'index.html' : hash + '/index.html');
         loadPage(fetchPath);
-      };
+      });
     }
   });
 }
@@ -75,12 +76,10 @@ function attachLinkListeners() {
 // Load halaman awal sesuai hash
 function initPage() {
   let hash = window.location.hash.slice(1) || 'home';
-  const fetchPath = base + '/' + (hash === 'home' ? 'index.html' : hash + '/index.html');
-  
-  // Kalau hash = home, biarkan {{ content }} muncul
   if(hash === 'home') {
-    attachLinkListeners();
+    attachLinkListeners(); // homepage sudah ada konten
   } else {
+    const fetchPath = base + '/' + hash + '/index.html';
     loadPage(fetchPath);
   }
 }
