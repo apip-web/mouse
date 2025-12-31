@@ -1,6 +1,32 @@
 <script>
+/* =========================
+   SETUP (ini penanda update)
+========================= */
 const pageHolder = document.getElementById('page_holder');
 const base = "{{ site.baseurl }}"; // "/mouse"
+
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+
+/* =========================
+   SCROLL MEMORY
+========================= */
+function saveScroll() {
+  sessionStorage.setItem(
+    'scroll:' + location.pathname,
+    window.scrollY
+  );
+}
+
+function restoreScroll() {
+  const y = sessionStorage.getItem(
+    'scroll:' + location.pathname
+  );
+  if (y !== null) {
+    window.scrollTo(0, parseInt(y, 10));
+  }
+}
 
 /* =========================
    LOAD PAGE
@@ -8,7 +34,6 @@ const base = "{{ site.baseurl }}"; // "/mouse"
 function loadPage(url, push = true) {
   const oldPage = pageHolder.querySelector('.page-content');
 
-  // animasi keluar dulu
   if (oldPage) {
     oldPage.classList.remove('enter');
     oldPage.classList.add('exit');
@@ -26,26 +51,27 @@ function loadPage(url, push = true) {
       wrapper.className = 'page-content';
       wrapper.innerHTML = html;
 
-      // tunggu animasi keluar selesai
       setTimeout(() => {
         pageHolder.innerHTML = '';
         pageHolder.appendChild(wrapper);
 
-        // force reflow
         wrapper.getBoundingClientRect();
-
-        // animasi masuk dari atas
         wrapper.classList.add('enter');
 
-        window.scrollTo(0, 0);
+        if (push) {
+          window.scrollTo(0, 0);      // klik link → ke atas
+        } else {
+          restoreScroll();            // reload / back / forward
+        }
+
         attachLinkListeners();
-        initTextareaApp(); // textarea
-        initBreadcrumb(url); // ← breadcrumb
+        initTextareaApp?.();
+        initBreadcrumb?.(url);
 
         if (push) {
           history.pushState({ url }, '', url);
         }
-      }, oldPage ? 300 : 0); // kalau first load → langsung
+      }, oldPage ? 300 : 0);
     })
     .catch(() => {
       show404(push);
@@ -65,7 +91,7 @@ function show404(push = true) {
   `;
 
   const box = pageHolder.querySelector('.page-404');
-  box.getBoundingClientRect(); // force reflow
+  box.getBoundingClientRect();
   box.classList.add('show');
 
   attachLinkListeners();
@@ -93,8 +119,9 @@ function attachLinkListeners() {
     a.addEventListener('click', e => {
       e.preventDefault();
 
-      let url = a.getAttribute('href');
+      saveScroll(); // 🔑 SIMPAN POSISI
 
+      let url = a.getAttribute('href');
       if (!url.startsWith(base)) {
         url = base + url;
       }
@@ -110,6 +137,12 @@ function attachLinkListeners() {
 window.addEventListener('popstate', () => {
   loadPage(location.pathname, false);
 });
+
+/* =========================
+   RELOAD / F5
+========================= */
+window.addEventListener('beforeunload', saveScroll);
+window.addEventListener('load', restoreScroll);
 
 /* =========================
    INITIAL LOAD
