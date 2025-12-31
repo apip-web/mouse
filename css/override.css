@@ -31,6 +31,7 @@ code {
   background-color: #d8e7ff;
   color: #002b72;
   padding: 3px 5px;
+  border-radius: 6px;
 }
 
 /* directory */
@@ -112,7 +113,7 @@ code {
 
 /* Blockquote */
 blockquote {
-  border-left: 4px solid #3498db; /* garis tepi kiri */
+  border-left: 4px solid #FFFDCF; /* garis tepi kiri */
   padding: 10px 20px;
   margin: 16px 0;
   font-style: italic;
@@ -158,7 +159,7 @@ td {
 
 /* Striping baris */
 tr:nth-child(even) {
-  background-color: #f4f4f9;
+  background-color: #FFFDCF;
 }
 
 /* Hover */
