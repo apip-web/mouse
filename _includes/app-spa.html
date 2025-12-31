@@ -56,12 +56,16 @@ function loadPage(url, push = true) {
 ========================= */
 function show404(push = true) {
   pageHolder.innerHTML = `
-    <div style="padding:2em">
+    <div class="page-404">
       <h1>404</h1>
       <p>Page not found.</p>
       <p><a href="${base}/">Back to Home</a></p>
     </div>
   `;
+
+  const box = pageHolder.querySelector('.page-404');
+  box.getBoundingClientRect(); // force reflow
+  box.classList.add('show');
 
   attachLinkListeners();
 
