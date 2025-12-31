@@ -60,12 +60,12 @@ title: Blog Archive
 {% endif %}
 
 <h3>{{ month }}</h3>
-<ul style="margin-bottom:10px;">
+<ul>
 
 {% assign current_month = month %}
 {% endif %}
 
-<li>
+<li style="margin-bottom:10px;">
   <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
 </li>
 {% endfor %}
