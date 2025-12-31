@@ -106,13 +106,12 @@ hr {
 
 /* Blockquote */
 blockquote {
-  border-left: 4px solid #FFFDCF; /* garis tepi kiri */
+  border-left: 4px solid #FFFDCF;
   padding: 10px 20px;
   margin: 16px 0;
   font-style: italic;
   color: #333;
-  background: rgba(52, 152, 219, 0.05); /* latar tipis */
-  border-radius: 6px;
+  background: rgba(52, 152, 219, 0.05);
 }
 
 blockquote p {
@@ -133,14 +132,10 @@ table {
   border-collapse: collapse;
   margin: 1em 0;
   font-size: 14px;
-  font-family: sans-serif;
 }
 
 /* Header */
 th {
-  background-color: #FFFDCF;
-  color: black;
-  font-weight: bold;
   text-align: left;
   padding: 8px;
 }
@@ -148,16 +143,8 @@ th {
 /* Cell */
 td {
   padding: 8px;
-}
-
-/* Striping baris */
-tr:nth-child(even) {
-  background-color: #FFFDCF;
-}
-
-/* Hover */
-tr:hover {
-  background-color: #FFFDCF;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 /* Post navigation links */
