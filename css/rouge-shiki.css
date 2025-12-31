@@ -1,7 +1,7 @@
 /* Rouge Shiki Light Theme */
 /* Inspired by Shiki GitHub Light */
 
-.highlight { 
+.highlight .highlight { 
   font-size: 16px; 
   background-color: #FAFBFC; 
   border-radius: 8px; 
@@ -11,7 +11,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
 }
 
-.highlight .hll { background-color: #2DAE5822; } /* selection highlight */
+/* .highlight .hll { background-color: #2DAE5822; } selection highlight */
 
 .highlight .c   { color: #ADB1C2; font-style: italic } /* Comment */
 .highlight .err { color: #FF5C56; background-color: #FFAEAC33 } /* Error */
