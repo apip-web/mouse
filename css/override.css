@@ -27,30 +27,31 @@ code {
 }
 
 /* Spa */
-#page_holder {  
-  position: relative;  
-  overflow: hidden;  
-}  
+#page_holder {
+  position: relative;
+  overflow: hidden;
+}
 
-/* page baru */
+/* base */
 .page-content {
+  position: relative;
   opacity: 0;
-  transform: translateX(24px);
+  transform: translateY(-24px);
   transition:
-    opacity 0.35s ease,
-    transform 0.35s ease;
+    transform 0.45s ease,
+    opacity 0.45s ease;
 }
 
-/* saat aktif */
-.page-content.active {
+/* masuk dari atas */
+.page-content.enter {
   opacity: 1;
-  transform: translateX(0);
+  transform: translateY(0);
 }
 
-/* page lama keluar */
+/* keluar ke bawah */
 .page-content.exit {
   opacity: 0;
-  transform: translateX(-24px);
+  transform: translateY(24px);
 }
 
 /* Semua gambar di page_holder responsif */
