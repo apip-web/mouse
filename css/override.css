@@ -109,6 +109,62 @@ code {
   transform: scale(1.03); /* efek zoom kecil saat hover */
 }
 
+/* Blockquote */
+blockquote {
+  border-left: 4px solid #3498db; /* garis tepi kiri */
+  padding: 10px 20px;
+  margin: 16px 0;
+  font-style: italic;
+  color: #333;
+  background: rgba(52, 152, 219, 0.05); /* latar tipis */
+  border-radius: 6px;
+}
+
+blockquote p {
+  margin: 0;
+}
+
+blockquote cite {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.9em;
+  color: #666;
+  text-align: right;
+}
+
+/* Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 14px;
+  font-family: sans-serif;
+}
+
+/* Header */
+th {
+  background-color: #FFFDCF;
+  color: black;
+  font-weight: bold;
+  text-align: left;
+  padding: 8px;
+}
+
+/* Cell */
+td {
+  padding: 8px;
+}
+
+/* Striping baris */
+tr:nth-child(even) {
+  background-color: #f4f4f9;
+}
+
+/* Hover */
+tr:hover {
+  background-color: #FFFDCF;
+}
+
 /* Post navigation links */
 .post_navi {
   display: flex;
