@@ -54,6 +54,55 @@ code {
   transform: translateY(24px);
 }
 
+/* 404 */
+.page-404 {
+  max-width: 640px;
+  margin: 80px auto;
+  padding: 32px;
+  text-align: center;
+
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.08);
+
+  opacity: 0;
+  transform: translateY(-20px);
+  transition:
+    opacity .4s ease,
+    transform .4s ease;
+}
+
+.page-404.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-404 h1 {
+  font-size: 72px;
+  margin: 0;
+  color: #e74c3c;
+}
+
+.page-404 p {
+  margin: 12px 0 24px;
+  color: #555;
+}
+
+.page-404 a {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+
+  background: #3498db;
+  color: #fff;
+  font-weight: 500;
+}
+
+.page-404 a:hover {
+  background: #2980b9;
+}
+
 /* Semua gambar di page_holder responsif */
 #page_holder img {
   max-width: 100%;   /* jangan melebihi container */
