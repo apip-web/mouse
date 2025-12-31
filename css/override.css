@@ -56,7 +56,7 @@ code {
 
 /* 404 */
 .page-404 {
-  padding-bottom:2em;
+  padding:2em;
   background:#fee;
   color:#900
   opacity: 0;
