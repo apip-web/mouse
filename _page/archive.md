@@ -52,22 +52,22 @@ title: Blog Archive
 {% assign current_month = "" %}
 
 {% for post in posts %}
-  {% assign month = post.date | date: "%B %Y" %}
+{% assign month = post.date | date: "%B %Y" %}
 
-  {% if month != current_month %}
-    {% if current_month != "" %}
-      </ul>
-    {% endif %}
+{% if month != current_month %}
+{% if current_month != "" %}
+</ul>
+{% endif %}
 
-    <h3>{{ month }}</h3>
-    <ul>
+<h3>{{ month }}</h3>
+<ul>
 
-    {% assign current_month = month %}
-  {% endif %}
+{% assign current_month = month %}
+{% endif %}
 
-  <li>
-    <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-  </li>
+<li>
+  <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+</li>
 {% endfor %}
 
 </ul>
