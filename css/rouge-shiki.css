@@ -1,6 +1,17 @@
 /* Rouge Shiki Light Theme */
 /* Inspired by Shiki GitHub Light */
 
+code {
+  background-color: #d8e7ff;
+  color: #002b72;
+  padding: 3px 5px;
+  border-radius: 6px;
+}
+
+.highlight code {
+  background: transparent;
+}
+
 .highlight .highlight { 
   font-size: 16px; 
   background-color: #FAFBFC; 
