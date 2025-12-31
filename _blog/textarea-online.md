@@ -1,9 +1,8 @@
 ---
-layout: default
+layout: post
+date: 2025-12-30
 title: Textarea Online
 ---
-
-# Textarea Online
 
 <style>
   body {
