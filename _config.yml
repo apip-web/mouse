@@ -9,6 +9,9 @@ collections:
   blog:
     output: true
     permalink: /blog/:name/
+  page:
+    output: true
+    permalink: /page/:name/
 
 rss: rss
 
