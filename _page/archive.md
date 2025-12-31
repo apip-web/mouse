@@ -65,9 +65,9 @@ title: Blog Archive
 {% assign current_month = month %}
 {% endif %}
 
-<li>
+<ul><li>
   <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-</li>
+</li></ul>
 {% endfor %}
 
 </ul>
