@@ -100,6 +100,10 @@ Right aligned columns
 *   [Next.js on Netlify](https://docs.netlify.com/frameworks/next-js/overview/)
 *   [Use Visual Editor with Next.js](https://docs.netlify.com/visual-editor/frameworks/next/)
 
+## Button
+
+<button>Button</button>
+
 ## Image
 
 Recommended image orientation is horizontal. You can adjust the image component to your needs in `components/CustomImage.js`.
