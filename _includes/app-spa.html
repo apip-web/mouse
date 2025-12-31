@@ -56,10 +56,10 @@ function loadPage(url, push = true) {
 ========================= */
 function show404(push = true) {
   pageHolder.innerHTML = `
-    <div class="page-404">
+    <div class="page-content active" style="padding:2em;background:#fee;color:#900">
       <h1>404</h1>
-      <p>Page not found.</p>
-      <p><a href="${base}/">Back to Home</a></p>
+      <p>Halaman tidak ditemukan.</p>
+      <a href="${base}/">Kembali ke Home</a>
     </div>
   `;
 
