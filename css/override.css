@@ -13,16 +13,14 @@ body {
   flex-direction: column;
   line-height: 1.4;
 }
+
 a:link,
 a:visited {
   color: var(--accent);
-  text-decoration: none;
+  text-decoration: underline;
+  font-weight: bold;
 }
 
-a:hover,
-a:active {
-  text-decoration: underline;
-}
 hr {
   margin: 5px;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
