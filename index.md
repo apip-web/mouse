@@ -15,10 +15,10 @@ Or maybe what you plan to blog about.
 
 some lined
 
-### Pages
+### Blog:
 <ul>
   {% for p in site.blog %}
-    <li>
+    <li style="margin-bottom:10px;">
       <a href="{{ p.url | relative_url }}">{{ p.title }}</a>
     </li>
   {% endfor %}
@@ -26,4 +26,4 @@ some lined
 
 <hr>
 
-<a href="{{ '/blog/my-post' | relative_url }}">Lihat semua post</a>
+<a href="{{ '/page/archive' | relative_url }}">Lihat semua post</a>
