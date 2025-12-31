@@ -1,11 +1,8 @@
 ---
 layout: default
-title: This is HomePage
 ---
 
 # This is HomePage
-
-<img src="{{ '/img/school-chalkboard.webp' | relative_url }}" alt="School Chalkboard" />
 
 Here you can say lots of fun things about your site.
 
@@ -23,7 +20,5 @@ some lined
     </li>
   {% endfor %}
 </ul>
-
-<hr>
 
 <a href="{{ '/page/archive' | relative_url }}">Lihat semua post</a>
