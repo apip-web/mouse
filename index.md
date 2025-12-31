@@ -17,7 +17,8 @@ some lined
 
 ### Blog:
 <ul>
-  {% for p in site.blog %}
+  {% assign recent_posts = site.blog | sort: "date" | reverse | slice: 0, 2 %}
+  {% for p in recent_posts %}
     <li style="margin-bottom:10px;">
       <a href="{{ p.url | relative_url }}">{{ p.title }}</a>
     </li>
