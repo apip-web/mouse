@@ -104,4 +104,4 @@ Right aligned columns
 
 Recommended image orientation is horizontal. You can adjust the image component to your needs in `components/CustomImage.js`.
 
-![Image alt text](/img/school-chalkboard.webp "Image Title")
+![Image alt text]({{ '/img/school-chalkboard.webp' | relative_url }} "Image Title")
