@@ -55,6 +55,11 @@ code {
 }
 
 /* 404 */
+.page-404 {
+  padding:2em;
+  background:#fee;
+  color:#900
+}
 
 /* Semua gambar di page_holder responsif */
 #page_holder img {
