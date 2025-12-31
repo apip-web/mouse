@@ -6,31 +6,45 @@ const base = "{{ site.baseurl }}"; // "/mouse"
    LOAD PAGE
 ========================= */
 function loadPage(url, push = true) {
+  const oldPage = pageHolder.querySelector('.page-content');
+
+  // animasi keluar dulu
+  if (oldPage) {
+    oldPage.classList.remove('enter');
+    oldPage.classList.add('exit');
+  }
+
   fetch(url)
     .then(res => {
       if (!res.ok) throw new Error('Page not found');
       return res.text();
     })
     .then(html => {
-      html = html.replace(/<footer[\s\S]*?<\/footer>/gi,'');
+      html = html.replace(/<footer[\s\S]*?<\/footer>/gi, '');
 
       const wrapper = document.createElement('div');
       wrapper.className = 'page-content';
       wrapper.innerHTML = html;
 
-      pageHolder.innerHTML = '';
-      pageHolder.appendChild(wrapper);
+      // tunggu animasi keluar selesai
+      setTimeout(() => {
+        pageHolder.innerHTML = '';
+        pageHolder.appendChild(wrapper);
 
-      wrapper.getBoundingClientRect();
-      wrapper.classList.add('active');
+        // force reflow
+        wrapper.getBoundingClientRect();
 
-      window.scrollTo(0,0);
-      attachLinkListeners();
-      initTextareaApp(); // ← textarea
+        // animasi masuk dari atas
+        wrapper.classList.add('enter');
 
-      if (push) {
-        history.pushState({ url }, '', url);
-      }
+        window.scrollTo(0, 0);
+        attachLinkListeners();
+        initTextareaApp(); // textarea aman
+
+        if (push) {
+          history.pushState({ url }, '', url);
+        }
+      }, oldPage ? 300 : 0); // kalau first load → langsung
     })
     .catch(() => {
       show404(push);
