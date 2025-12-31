@@ -56,9 +56,19 @@ code {
 
 /* 404 */
 .page-404 {
-  padding:2em;
+  padding-bottom:2em;
   background:#fee;
   color:#900
+  opacity: 0;
+  transform: translateY(-20px);
+  transition:
+    opacity .4s ease,
+    transform .4s ease;
+}
+
+.page-404.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Semua gambar di page_holder responsif */
