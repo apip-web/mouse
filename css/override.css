@@ -43,6 +43,7 @@ code {
 
 /* Spa */
 #page_holder {
+  margin-top: 12px;
   position: relative;
   overflow: hidden;
 }
