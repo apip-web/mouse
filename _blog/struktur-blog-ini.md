@@ -49,26 +49,4 @@ date: 2025-12-29
       <li><code>/img/</code> — gambar dan media</li>
     </ul>
   </li>
-
-  <li>
-    <strong>Cara Kerja SPA</strong>
-    <ul>
-      <li>Link internal dicegat JavaScript</li>
-      <li>Konten diambil via <code>fetch()</code></li>
-      <li>Konten dimasukkan ke <code>#page_holder</code></li>
-      <li>URL berubah via <code>history.pushState()</code></li>
-      <li>Tanpa reload halaman</li>
-    </ul>
-  </li>
-
-  <li>
-    <strong>Kelebihan Pendekatan Ini</strong>
-    <ul>
-      <li>Tidak memakai framework</li>
-      <li>Tetap kompatibel dengan Jekyll & GitHub Pages</li>
-      <li>Halaman bisa di mana saja (tidak harus di folder blog)</li>
-      <li>Performa ringan</li>
-      <li>Mudah dikontrol dan dipahami</li>
-    </ul>
-  </li>
 </ul>
