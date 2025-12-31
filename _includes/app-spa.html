@@ -39,7 +39,8 @@ function loadPage(url, push = true) {
 
         window.scrollTo(0, 0);
         attachLinkListeners();
-        initTextareaApp(); // textarea aman
+        initTextareaApp(); // textarea
+        initBreadcrumb(url); // ← breadcrumb
 
         if (push) {
           history.pushState({ url }, '', url);
