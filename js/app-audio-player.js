@@ -1,5 +1,5 @@
 function initWaveSurfer() {
-  if (typeof WaveSurfer === 'undefined') return;
+  if (!window.WaveSurfer) return;
 
   document.querySelectorAll('.audio-player').forEach(player => {
     if (player.dataset.ready) return;
@@ -9,24 +9,25 @@ function initWaveSurfer() {
     const btn = player.querySelector('.play');
     const src = player.dataset.audio;
 
+    // BUAT AUDIO ELEMENT SENDIRI
+    const audio = new Audio(src);
+    audio.preload = 'metadata';
+
     const ws = WaveSurfer.create({
       container: waveEl,
-      backend: 'MediaElement', // ⭐ WAJIB
+      media: audio,            // ⭐ WAJIB v7
       waveColor: '#ccc',
       progressColor: '#ff0f00',
       height: 60,
       barWidth: 2,
-      responsive: true,
     });
-
-    ws.load(src);
 
     btn.addEventListener('click', () => {
       ws.playPause();
     });
 
-    ws.on('play', () => btn.textContent = 'Pause');
-    ws.on('pause', () => btn.textContent = 'Play');
+    ws.on('play',   () => btn.textContent = 'Pause');
+    ws.on('pause',  () => btn.textContent = 'Play');
     ws.on('finish', () => btn.textContent = 'Play');
   });
 }
