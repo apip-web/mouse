@@ -2,6 +2,7 @@
   --text-color: #FF0F00;
   --primary-bg: #FFFFDD;
   --secondary-bg: #F8F8D7;
+  --secondary-text-size: 13px;
 }
 
 * {
@@ -60,7 +61,7 @@ button:hover {
 
 /* directory */
 .breadcrumb {
-  font-size: 13px;
+  font-size: var(--secondary-text-size);
   opacity: .7;
 }
 
@@ -226,14 +227,6 @@ td {
   text-align: center;
   padding: 1.5em 0;
   background: transparent;
-  font-size: 0.9rem;
-  color: #555;
+  font-size: var(--secondary-text-size);
   border-top: 1px solid rgba(0, 0, 0, 0.1);
-}
-.site-footer a {
-  color: #3366cc;
-  text-decoration: none;
-}
-.site-footer a:hover {
-  text-decoration: underline;
 }
