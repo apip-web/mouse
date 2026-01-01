@@ -31,6 +31,10 @@ hr {
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 
+.post-meta {
+  font-size: 12px;
+}
+
 /* Button */
 button {
   background: #111111;
