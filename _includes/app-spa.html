@@ -67,6 +67,7 @@ function loadPage(url, push = true) {
         attachLinkListeners();
         initTextareaApp?.();
         initBreadcrumb?.(url);
+        initWaveSurfer(); // audio player
 
         if (push) {
           history.pushState({ url }, '', url);
