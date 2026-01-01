@@ -39,7 +39,7 @@ layout: default
   </div>
 </div>
 
-<div class="audio-player" data-audio="https://assets.mixkit.co/active_storage/sfx/1354/1354-preview.mp3">
+<div class="audio-player" data-audio="https://d6cp9b00-a.akamaihd.net/downloads/ringtones/files/mp3/p-o-l-i-c-e-2081-48328.mp3">
   <div class="wave"></div>
   <div class="controls-row">
     <div class="time-text">00:00 / 00:00</div>
