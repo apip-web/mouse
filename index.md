@@ -21,44 +21,63 @@ layout: default
 
 <a href="{{ '/page/archive' | relative_url }}">Lihat semua post</a>
 
-<div class="audio-player" data-audio="https://assets.mixkit.co/active_storage/sfx/1356/1356-preview.mp3">
-  <div class="wave"></div>
-  <button class="play">Play</button>
+<div class="audio-player">
+  <div class="audio-title">Modern Audio Player</div>
+  <div id="waveform"></div>
+
+  <div class="controls-row">
+    <button id="playBtn" class="play-btn">Play</button>
+    <div id="timeText" class="time-text">00:00 / 00:00</div>
+  </div>
 </div>
 
 <script src="https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.min.js"></script>
 
 <style>
-.audio-player {
-  margin: 1em 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* tengah */
-  max-width: 700px;
-}
+  .audio-player {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    padding: 18px;
+    border-radius: 12px;
+    max-width: 520px;
+    color: #ddd;
+    font-family: sans-serif;
+    margin: 10px 0;
+  }
 
-.audio-player .wave {
-  width: 100%;
-  height: 80px;            /* agak tinggi tapi tidak terlalu besar */
-  border-radius: 6px;
-  background: #f0f0f0;     /* background gelombang */
-  margin-bottom: 0.5em;
-}
+  .audio-title {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #ffa869;
+    font-weight: 500;
+  }
 
-.audio-player .play {
-  padding: 0.4em 1em;       /* lebih kecil */
-  min-width: 80px;          /* tombol tidak terlalu lebar */
-  border-radius: 6px;
-  border: none;
-  background: #ff4500;
-  color: #fff;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 0.9rem;
-  transition: background 0.2s;
-}
+  #waveform {
+    height: 90px;
+    border-radius: 6px;
+    background: #0d0d0d;
+    margin-bottom: 15px;
+  }
 
-.audio-player .play:hover {
-  background: #e03e00;
-}
+  .controls-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .play-btn {
+    background: #ff5722;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  .time-text {
+    margin-left: auto;
+    font-size: 13px;
+    color: #aaa;
+  }
 </style>
