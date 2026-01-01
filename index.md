@@ -28,18 +28,18 @@ layout: default
   <button class="play">Play</button>
 </div>
 
-<div class="audio-player" data-audio="https://nzt6ku-a.akamaihd.net/downloads/ringtones/files/mp3/hello-moto-2-59030.mp3">
+<div class="audio-player" data-audio="https://typecast.ai/assets/whisper-chad-B5ZNLwU3.mp3">
   <div class="wave"></div>
   <div class="controls-row">
     <div>
-      <div class="audio-title">hello-moto-2</div>
+      <div class="audio-title">Whisper Chad</div>
       <div class="time-text">00:00 / 00:00</div>
     </div>
     <button class="play">Play</button>
   </div>
 </div>
 
-<div class="audio-player" data-audio="https://d6cp9b00-a.akamaihd.net/downloads/ringtones/files/mp3/p-o-l-i-c-e-2081-48328.mp3">
+<div class="audio-player" data-audio="https://typecast.ai/assets/sad-nia-DBH9tC2a.mp3">
   <div class="wave"></div>
   <div class="controls-row">
     <div class="time-text">00:00 / 00:00</div>
