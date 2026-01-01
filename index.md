@@ -31,6 +31,18 @@ layout: default
   </div>
 </div>
 
+## #2
+
+<div class="audio-player" data-audio="https://assets.mixkit.co/active_storage/sfx/1356/1356-preview.mp3">
+  <div class="audio-title">Modern Audio Player</div>
+  <div class="waveform"></div>
+
+  <div class="controls-row">
+    <button class="play-btn">Play</button>
+    <div class="time-text">00:00 / 00:00</div>
+  </div>
+</div>
+
 <script src="https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.min.js"></script>
 
 <style>
