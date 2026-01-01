@@ -128,14 +128,6 @@ button:hover {
   margin: 0 auto;    /* optional: tengahkan gambar */
 }
 
-/* Jika mau, tambahkan efek transisi ringan saat muncul */
-#page_holder img {
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
-#page_holder img:hover {
-  transform: scale(1.03); /* efek zoom kecil saat hover */
-}
-
 /* Blockquote */
 blockquote {
   position: relative;
