@@ -10,7 +10,7 @@ layout: default
 > 
 > Or maybe what you plan to blog about.
 
-<div class="audio-player" data-audio="/audio/sample.mp3">
+<div class="audio-player" data-audio="https://dw.zobj.net/download/v1/bIbah8Iw9pz7z5Ai5YTdwP8bAvAbjgGSSx1kX_6iUwoX95S_0UVoBC4VipmQLxRJuR-eEQKijoToBU1LCt8zc0kNy2m9FYLSpk6-ol2blia1J04ZgDytLbYvN_aM/?a=&c=72&f=pop_pop_pop.mp3&special=1767266380-%2FRbSOMHm1sBi5jCGITN2LuyINbJIqWhQt4cbnWCIF7Y%3D">
   <div class="wave"></div>
   <button class="play">Play</button>
 </div>
