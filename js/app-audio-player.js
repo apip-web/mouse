@@ -1,6 +1,8 @@
 function initWaveSurfer() {
+  if (typeof WaveSurfer === 'undefined') return;
+
   document.querySelectorAll('.audio-player').forEach(player => {
-    if (player.dataset.ready) return; // cegah double init
+    if (player.dataset.ready) return;
     player.dataset.ready = '1';
 
     const waveEl = player.querySelector('.wave');
@@ -9,6 +11,7 @@ function initWaveSurfer() {
 
     const ws = WaveSurfer.create({
       container: waveEl,
+      backend: 'MediaElement', // ⭐ WAJIB
       waveColor: '#ccc',
       progressColor: '#ff0f00',
       height: 60,
@@ -20,7 +23,10 @@ function initWaveSurfer() {
 
     btn.addEventListener('click', () => {
       ws.playPause();
-      btn.textContent = ws.isPlaying() ? 'Pause' : 'Play';
     });
+
+    ws.on('play', () => btn.textContent = 'Pause');
+    ws.on('pause', () => btn.textContent = 'Play');
+    ws.on('finish', () => btn.textContent = 'Play');
   });
 }
