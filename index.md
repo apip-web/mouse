@@ -30,7 +30,13 @@ layout: default
 
 <div class="audio-player" data-audio="https://assets.mixkit.co/active_storage/sfx/1354/1354-preview.mp3">
   <div class="wave"></div>
-  <button class="play">Play</button>
+  <div class="controls-row">
+    <div>
+      <div class="audio-title">Nama File Audio</div>
+      <div class="time-text">00:00 / 00:00</div>
+    </div>
+    <button class="play">Play</button>
+  </div>
 </div>
 
 <div class="audio-player" data-audio="https://assets.mixkit.co/active_storage/sfx/1354/1354-preview.mp3">
