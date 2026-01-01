@@ -63,8 +63,6 @@ layout: default
 
 <script src="https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.min.js"></script>
 
-<script src="https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.min.js"></script>
-
 <style>
   .audio-player {
     background: #1a1a1a;
