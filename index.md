@@ -41,6 +41,15 @@ layout: default
   </div>
 </div>
 
+<div class="audio-player" data-audio="https://assets.mixkit.co/active_storage/sfx/1354/1354-preview.mp3">
+  <div class="audio-title">Mice Audio</div>
+  <div class="wave"></div>
+  <div class="controls-row">
+    <div class="time-text">00:00 / 00:00</div>
+    <button class="play">Play</button>
+  </div>
+</div>
+
 <script src="https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.min.js"></script>
 
 <style>
@@ -66,6 +75,13 @@ layout: default
   display: flex;
   align-items: center;
   justify-content: space-between; /* waktu kiri, tombol kanan */
+}
+
+.audio-player .audio-title {
+  font-size: 14px;
+  color: #ffa869;
+  font-weight: 500;
+  margin-bottom: 6px;
 }
 
 .audio-player .time-text {
