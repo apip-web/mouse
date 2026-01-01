@@ -28,11 +28,11 @@ layout: default
   <button class="play">Play</button>
 </div>
 
-<div class="audio-player" data-audio="https://assets.mixkit.co/active_storage/sfx/1354/1354-preview.mp3">
+<div class="audio-player" data-audio="https://nzt6ku-a.akamaihd.net/downloads/ringtones/files/mp3/hello-moto-2-59030.mp3">
   <div class="wave"></div>
   <div class="controls-row">
     <div>
-      <div class="audio-title">Nama File Audio</div>
+      <div class="audio-title">hello-moto-2</div>
       <div class="time-text">00:00 / 00:00</div>
     </div>
     <button class="play">Play</button>
