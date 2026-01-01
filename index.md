@@ -53,6 +53,16 @@ layout: default
   </div>
 </div>
 
+## #3
+
+<div class="audio-player"
+     data-audio="https://assets.mixkit.co/active_storage/sfx/1361/1361-preview.mp3">
+  <div class="wave"></div>
+  <button class="play">Play</button>
+</div>
+
+<script src="https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.min.js"></script>
+
 <script src="https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.min.js"></script>
 
 <style>
