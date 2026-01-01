@@ -5,10 +5,11 @@ title: Textarea Online
 ---
 
 <style>
+/*
   body {
     background: #f4f4f9;
   }
-
+*/
   .textarea-container {
     width: 100%;
     max-width: 700px;
@@ -51,10 +52,7 @@ title: Textarea Online
     padding: 10px 18px;
     background: #3498db;
     color: white;
-    border: none;
-    border-radius: 8px;
     cursor: pointer;
-    font-size: 14px;
   }
 
   button:hover {
