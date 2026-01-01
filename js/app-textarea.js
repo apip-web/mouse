@@ -7,6 +7,18 @@ function initTextareaApp() {
   if (!textarea) return;
 
   const STORAGE_KEY = 'autosave_textarea';
+  const RESET_DELAY = 2000;
+
+  function flashButton(btn, text) {
+    if (!btn) return;
+
+    const original = btn.textContent;
+    btn.textContent = text;
+
+    setTimeout(() => {
+      btn.textContent = original;
+    }, RESET_DELAY);
+  }
 
   // load otomatis
   const saved = localStorage.getItem(STORAGE_KEY);
@@ -21,22 +33,20 @@ function initTextareaApp() {
 
   saveBtn?.addEventListener('click', () => {
     localStorage.setItem(STORAGE_KEY, textarea.value);
-    alert('Text saved!');
+    flashButton(saveBtn, 'Saved');
   });
 
   loadBtn?.addEventListener('click', () => {
     const data = localStorage.getItem(STORAGE_KEY);
     if (data !== null) {
       textarea.value = data;
-      alert('Text loaded!');
-    } else {
-      alert('No saved text found.');
+      flashButton(loadBtn, 'Loaded');
     }
   });
 
   clearBtn?.addEventListener('click', () => {
     textarea.value = '';
     localStorage.removeItem(STORAGE_KEY);
-    alert('Cleared!');
+    flashButton(clearBtn, 'Cleared');
   });
 }
