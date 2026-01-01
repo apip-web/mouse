@@ -76,7 +76,7 @@ layout: default
 .audio-player .play {
   padding: 6px 12px;
   font-size: 14px;
-  background: #1a1a1a;
+  background: #222;
   border: none;
   border-radius: 6px;
   color: #fff;
