@@ -4,13 +4,11 @@ layout: default
 
 # This is HomePage
 
-Here you can say lots of fun things about your site.
+> Here you can say lots of fun things about your site.
 
-Maybe say a some things about yourself.
+> Maybe say a some things about yourself.
 
-Or maybe what you plan to blog about.
-
-some lined
+> Or maybe what you plan to blog about.
 
 ### Blog:
 <ul>
