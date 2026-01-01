@@ -36,10 +36,10 @@ button {
   background: #111111;
   color: #ffffff;
   border: 1px solid #111111;
-  padding: 0.9rem 1.8rem;
+  padding: 10px 20px;
   font-size: 0.95rem;
   font-weight: 500;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
 }
 
