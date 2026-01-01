@@ -2,7 +2,7 @@
 /* Inspired by Shiki GitHub Light */
 
 code {
-  background-color: #d8e7ff;
+  background-color: var(--secondary-bg);
   color: #002b72;
   padding: 3px 5px;
   border-radius: 6px;
