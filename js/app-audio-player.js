@@ -1,45 +1,50 @@
 function initWaveSurfer() {
-  const container = document.getElementById('waveform');
-  const playBtn   = document.getElementById("playBtn");
-  const timeText  = document.getElementById("timeText");
+  if (!window.WaveSurfer) return;
 
-  if (!container || !playBtn || !timeText || !window.WaveSurfer) return;
+  document.querySelectorAll('.audio-player').forEach(player => {
+    if (player.dataset.ready) return; // cegah double init
+    player.dataset.ready = '1';
 
-  const wave = WaveSurfer.create({
-    container: container,
-    waveColor: '#777',
-    progressColor: '#ff5722',
-    height: 90,
-    barWidth: 2,
-    responsive: true,
-    cursorColor: '#ffab40'
-  });
+    const waveEl   = player.querySelector('#waveform');  // bisa diganti class kalau mau multi
+    const playBtn  = player.querySelector('#playBtn');
+    const timeText = player.querySelector('#timeText');
 
-  const audioSrc = container.dataset.audio || ''; // bisa ambil dari data-audio
-  if (!audioSrc) return;
-  wave.load(audioSrc);
+    const audioSrc = waveEl.dataset.audio || '';
+    if (!audioSrc) return;
 
-  playBtn.onclick = () => wave.playPause();
+    const wave = WaveSurfer.create({
+      container: waveEl,
+      waveColor: '#777',
+      progressColor: '#ff5722',
+      height: 90,
+      barWidth: 2,
+      responsive: true,
+      cursorColor: '#ffab40'
+    });
 
-  wave.on('play', () => playBtn.textContent = 'Pause');
-  wave.on('pause', () => playBtn.textContent = 'Play');
+    wave.load(audioSrc);
 
-  wave.on('finish', () => playBtn.textContent = 'Play');
+    playBtn.onclick = () => wave.playPause();
 
-  wave.on('audioprocess', updateTime);
-  wave.on('ready', updateTime);
+    wave.on('play', () => playBtn.textContent = 'Pause');
+    wave.on('pause', () => playBtn.textContent = 'Play');
+    wave.on('finish', () => playBtn.textContent = 'Play');
 
-  function updateTime() {
-    const cur = wave.getCurrentTime();
-    const dur = wave.getDuration();
-    if (dur > 0) {
-      timeText.textContent = formatTime(cur) + " / " + formatTime(dur);
+    wave.on('audioprocess', updateTime);
+    wave.on('ready', updateTime);
+
+    function updateTime() {
+      const cur = wave.getCurrentTime();
+      const dur = wave.getDuration();
+      if (dur > 0) {
+        timeText.textContent = formatTime(cur) + " / " + formatTime(dur);
+      }
     }
-  }
 
-  function formatTime(t) {
-    const m = Math.floor(t / 60);
-    const s = Math.floor(t % 60);
-    return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-  }
+    function formatTime(t) {
+      const m = Math.floor(t / 60);
+      const s = Math.floor(t % 60);
+      return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    }
+  });
 }
