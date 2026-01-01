@@ -2,6 +2,10 @@
   --accent: #FF0F00;
 }
 
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
 html, body {
   height: 100%;
 }
