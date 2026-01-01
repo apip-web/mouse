@@ -61,6 +61,13 @@ layout: default
   <button class="play">Play</button>
 </div>
 
+## #4
+
+<audio controls preload="metadata">
+  <source src="https://assets.mixkit.co/active_storage/sfx/1361/1361-preview.mp3" type="audio/mpeg">
+  Browser kamu tidak mendukung audio.
+</audio>
+
 <script src="https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.min.js"></script>
 
 <style>
