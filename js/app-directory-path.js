@@ -7,23 +7,19 @@ function initBreadcrumb(path = location.pathname) {
     .replace(/\/$/, '');
 
   if (!clean) {
-    el.textContent = '/';
+    el.innerHTML = '<strong>/</strong>';
     return;
   }
 
   const parts = clean.split('/').filter(Boolean);
 
-  const html = parts.map((part, i) => {
+  const html = parts.map(part => {
     const label = part
       .replace(/[-_]/g, ' ')
       .replace(/\b\w/g, c => c.toUpperCase());
 
-    if (i === parts.length - 1) {
-      return `<strong>${label}</strong>`;
-    }
-
-    return `<span>${label}</span>`;
+    return `<strong>${label}</strong>`;
   }).join(' <span>›</span> ');
 
-  el.innerHTML = `/ <span>›</span> ${html}`;
+  el.innerHTML = `<strong>/</strong> <span>›</span> ${html}`;
 }
