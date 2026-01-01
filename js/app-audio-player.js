@@ -2,20 +2,20 @@ function initWaveSurfer() {
   if (!window.WaveSurfer) return;
 
   document.querySelectorAll('.audio-player').forEach(player => {
-    if (player.dataset.ready) return;
+    if (player.dataset.ready) return; // cegah double init
     player.dataset.ready = '1';
 
     const waveEl = player.querySelector('.wave');
     const btn = player.querySelector('.play');
     const src = player.dataset.audio;
-    if (!src) return;
+    if (!waveEl || !btn || !src) return;
 
     const audio = new Audio(src);
     audio.preload = 'metadata';
 
     const ws = WaveSurfer.create({
       container: waveEl,
-      media: audio,       // wajib di v7
+      media: audio,       // wajib v7
       waveColor: '#ccc',
       progressColor: '#ff0f00',
       height: 60,
