@@ -70,6 +70,36 @@ layout: default
 <script src="https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.min.js"></script>
 
 <style>
+.audio-player {
+  max-width: 520px;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  padding: 12px;
+  border-radius: 10px;
+  color: #ddd;
+  font-family: sans-serif;
+  margin: 10px 0;
+}
+
+.audio-player .wave {
+  height: 60px;
+  border-radius: 6px;
+  background: #0d0d0d;
+  margin-bottom: 10px;
+}
+
+.audio-player .play {
+  padding: 6px 12px;
+  font-size: 14px;
+  background: #ff5722;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+}
+</style>
+
+<style>
   .audio-player {
     background: #1a1a1a;
     border: 1px solid #333;
