@@ -43,7 +43,7 @@ layout: default
   </div>
 </div>
 
-<div class="audio-player" data-audio="https://assets.mixkit.co/active_storage/sfx/1357/1357-preview.mp3">
+<div class="audio-player" data-audio="https://assets.mixkit.co/active_storage/sfx/1361/1361-preview.mp3">
   <div class="audio-title">Second Player</div>
   <div class="waveform"></div>
 
