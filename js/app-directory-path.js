@@ -12,11 +12,8 @@ function initBreadcrumb(path = location.pathname) {
   }
 
   const parts = clean.split('/').filter(Boolean);
-  let acc = '';
 
   const html = parts.map((part, i) => {
-    acc += '/' + part;
-
     const label = part
       .replace(/[-_]/g, ' ')
       .replace(/\b\w/g, c => c.toUpperCase());
@@ -25,7 +22,7 @@ function initBreadcrumb(path = location.pathname) {
       return `<strong>${label}</strong>`;
     }
 
-    return `<a href="${base}${acc}">${label}</a>`;
+    return `<span>${label}</span>`;
   }).join(' <span>›</span> ');
 
   el.innerHTML = `/ <span>›</span> ${html}`;
