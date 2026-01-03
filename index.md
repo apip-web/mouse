@@ -54,11 +54,11 @@ layout: default
 <style>
 .audio-player {
   max-width: 520px;
-  background: #1a1a1a;
-  border: 1px solid #333;
+  background: #fdf6f0;        /* putih pastel */
+  border: 1px solid #eee;     /* border lembut */
   padding: 12px;
   border-radius: 10px;
-  color: #ddd;
+  color: #555;                 /* teks gelap tapi lembut */
   font-family: sans-serif;
   margin: 10px 0;
 }
@@ -66,7 +66,7 @@ layout: default
 .audio-player .wave {
   height: 60px;
   border-radius: 6px;
-  background: #0d0d0d;
+  background: #f5f0eb;        /* gelombang latar lembut */
   margin-bottom: 10px;
 }
 
@@ -78,23 +78,23 @@ layout: default
 
 .audio-player .audio-title {
   font-size: 14px;
-  color: #ffa869;
+  color: #8c6d62;              /* judul pastel */
   font-weight: 500;
   margin-bottom: 6px;
 }
 
 .audio-player .time-text {
   font-size: 13px;
-  color: #aaa;
+  color: #777;                 /* waktu sedikit gelap */
 }
 
 .audio-player .play {
   padding: 6px 12px;
   font-size: 14px;
-  background: #222;
+  background: #ffe1c6;         /* tombol pastel oranye muda */
   border: none;
   border-radius: 6px;
-  color: #fff;
+  color: #555;                 /* teks tombol gelap */
   cursor: pointer;
 }
 </style>
