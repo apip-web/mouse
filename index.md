@@ -23,11 +23,6 @@ layout: default
 
 ## #3
 
-<div class="audio-player" data-audio="https://assets.mixkit.co/active_storage/sfx/1361/1361-preview.mp3">
-  <div class="wave"></div>
-  <button class="play">Play</button>
-</div>
-
 <div class="audio-player" data-audio="https://typecast.ai/assets/whisper-chad-B5ZNLwU3.mp3">
   <div class="wave"></div>
   <div class="controls-row">
