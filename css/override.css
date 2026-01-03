@@ -1,6 +1,6 @@
 :root {
   --text-color: #1a1a1a;
-  --primary-bg: #FFFFDD;
+  --primary-bg: #f4f4f9; /* #FFFFDD; */
   --secondary-bg: #F8F8D7;
   --secondary-text-size: 13px;
 }
