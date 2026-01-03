@@ -56,8 +56,6 @@ layout: default
   </div>
 </div>
 
-<script src="https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.min.js"></script>
-
 <style>
 .audio-player {
   max-width: 520px;
