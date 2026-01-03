@@ -23,7 +23,7 @@ layout: default
 
 ## #3
 
-<div class="audio-player" data-audio="https://typecast.ai/assets/whisper-chad-B5ZNLwU3.mp3">
+<div class="audio-player" data-audio="/assets/audio/whisper-chad.mp3">
   <div class="wave"></div>
   <div class="controls-row">
     <div>
@@ -34,7 +34,7 @@ layout: default
   </div>
 </div>
 
-<div class="audio-player" data-audio="https://typecast.ai/assets/sad-nia-DBH9tC2a.mp3">
+<div class="audio-player" data-audio="/assets/audio/sad-nia.mp3">
   <div class="wave"></div>
   <div class="controls-row">
     <div class="time-text">00:00 / 00:00</div>
