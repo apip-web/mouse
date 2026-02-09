@@ -22,6 +22,6 @@ NXVUCO7BHRSEVOEQ2J324ER2UJM6LDKX
 
 ## Barcode
 
-![Image alt text]({{ '/img/school-chalkboard.webp' | relative_url }} "Image Title")
+![Image alt text]({{ '/img/Screenshot_20260209-195531.png' | relative_url }} "Image Title")
 
-![Image alt text]({{ '/img/school-chalkboard.webp' | relative_url }} "Image Title")
+![Image alt text]({{ 'Screenshot_20260209-195602.png' | relative_url }} "Image Title")
