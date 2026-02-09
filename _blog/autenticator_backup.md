@@ -22,6 +22,16 @@ NXVUCO7BHRSEVOEQ2J324ER2UJM6LDKX
 
 ## Barcode
 
-![Image alt text]({{ '/img/Screenshot_20260209-195531.png' | relative_url }} "Image Title")
+<img
+  src="{{ '/img/Screenshot_20260209-195531.png' | relative_url }}"
+  alt="autenticator_backup"
+  title="autenticator_backup"
+  loading="lazy"
+/>
 
-![Image alt text]({{ '/img/Screenshot_20260209-195602.png' | relative_url }} "Image Title")
+<img
+  src="{{ '/img/Screenshot_20260209-195602.png' | relative_url }}"
+  alt="autenticator_backup"
+  title="autenticator_backup"
+  loading="lazy"
+/>
