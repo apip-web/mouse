@@ -4,6 +4,8 @@ date: 2026-02-09
 title: Autenticator Backup
 ---
 
+## Code
+
 nfs
 NHVEHQ5GGGEYOY4E5GSSMJBSI7MRJJFL
 
@@ -18,3 +20,8 @@ IW4KCDK6EAOJ6PDPCQYD2DKLDYYBO6XN
 jim
 NXVUCO7BHRSEVOEQ2J324ER2UJM6LDKX
 
+## Barcode
+
+![Image alt text]({{ '/img/school-chalkboard.webp' | relative_url }} "Image Title")
+
+![Image alt text]({{ '/img/school-chalkboard.webp' | relative_url }} "Image Title")
