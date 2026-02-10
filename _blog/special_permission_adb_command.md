@@ -1,7 +1,7 @@
 ---
 layout: post
 date: 2026-02-10
-title: Special permission adb command
+title: Special Permission Adb Command
 ---
 
 Adb Command untuk memberi permission supaya bisa melihat dan edit folder data di dalam folder android.
