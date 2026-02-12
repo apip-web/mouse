@@ -8,6 +8,7 @@ Github | outan544     | O_C8eqIiRqU80Jf
 Google | -"-          | -"-
 -"-    | nfs.pybck.01 | katln
 -"-    | comeccer     | thew..84
+mega   | outan544     | ø,¸¸,ø¤º°`°º¤
 
 ## Wifi
 
