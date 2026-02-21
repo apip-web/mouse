@@ -1,7 +1,7 @@
 ---
 layout: post
 date: 2026-02-22
-title: Backup Tagihan Listrik & PAM
+title: Backup Tagihan Listrik dan PAM
 ---
 
 ## Kastiman
